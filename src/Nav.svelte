@@ -61,7 +61,7 @@
 
 			svg{
 				transition: @trans-speed;
-
+                height: 5rem;
 				span{
 					display: inline;
 					position: absolute;
