@@ -95,6 +95,8 @@
 
 	svg{
 		width: 2rem;
+		height:2rem;
+		min-height:2rem;
 		min-width: 2rem;
 		margin: 0 1.5rem;
 		transition: @trans-speed;
