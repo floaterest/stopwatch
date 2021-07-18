@@ -68,8 +68,7 @@
 				display: inline;
 				position: absolute;
 				left: -999px;
-				transition: var(--transition-speed);
-
+				transition: calc(@trans-speed*2);
 			}
 		}
 
