@@ -53,22 +53,23 @@
 		&.logo{
 			font-weight: bold;
 			text-transform: uppercase;
-			margin-bottom: 1rem;
 			text-align: center;
 			font-size: 1.5rem;
 			letter-spacing: 0.3ch;
 			width: 100%;
-
+            display: flex;
+            align-items: center;
 			svg{
 				transition: @trans-speed;
-                height: 5rem;
-				span{
-					display: inline;
-					position: absolute;
-					left: -999px;
-					transition: var(--transition-speed);
+				height: 5rem;
+			}
 
-				}
+			span{
+				display: inline;
+				position: absolute;
+				left: -999px;
+				transition: var(--transition-speed);
+
 			}
 		}
 
@@ -95,8 +96,8 @@
 
 	svg{
 		width: 2rem;
-		height:2rem;
-		min-height:2rem;
+		height: 2rem;
+		min-height: 2rem;
 		min-width: 2rem;
 		margin: 0 1.5rem;
 		transition: @trans-speed;
