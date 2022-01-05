@@ -52,11 +52,12 @@
 	}
 
 	li{
+		font-size: 1.5rem;
+
 		&.logo{
 			font-weight: bold;
 			text-transform: uppercase;
 			text-align: center;
-			font-size: 1.5rem;
 			letter-spacing: 0.3ch;
 			width: 100%;
             display: flex;
@@ -76,7 +77,6 @@
 
 		&:not(.logo){
 			width: 100%;
-
 			&:last-child{
 				margin-top: auto;
 			}
