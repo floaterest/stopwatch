@@ -1,12 +1,14 @@
 <nav>
     <ul>
-        <li class="logo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                 class="bi bi-stopwatch" viewBox="0 0 16 16">
-                <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"/>
-                <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z"/>
-            </svg>
-            <span>Stopwatch</span>
+        <li>
+            <div class="logo">
+                <span>Stopwatch</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-stopwatch" viewBox="0 0 16 16">
+                    <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"/>
+                    <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z"/>
+                </svg>
+            </div>
         </li>
         <li>
             <a href="">
@@ -31,11 +33,14 @@
 </nav>
 
 <style lang="less">
-	@trans-speed: 200ms;
+	@trans-speed: 600ms;
+	@nav-width: 4rem;
+	@icon-size: 2rem;
+    @space: calc((@nav-width - @icon-size)/4);
+
 	nav{
 		position: fixed;
-		transition: width 200ms ease;
-
+		// change logo and title color on hover
 		&:hover .logo{
 			color: #39c5bb;
 		}
@@ -49,84 +54,60 @@
 		flex-direction: column;
 		align-items: center;
 		height: 100%;
-	}
 
-	li{
-		font-size: 1.5rem;
-
-		&.logo{
-			font-weight: bold;
-			text-transform: uppercase;
-			text-align: center;
-			letter-spacing: 0.3ch;
+		li{
 			width: 100%;
-            display: flex;
-            align-items: center;
-			svg{
-				transition: @trans-speed;
-				height: 5rem;
-			}
 
-			span{
-				display: inline;
-				position: absolute;
-				left: -999px;
-				transition: calc(@trans-speed*2);
-			}
-		}
-
-		&:not(.logo){
-			width: 100%;
 			&:last-child{
 				margin-top: auto;
 			}
 		}
 	}
 
+	.logo{
+        &:extend(a);
+		font-size: 1.5rem;
+		font-weight: bold;
+		text-transform: uppercase;
+		text-align: center;
+		letter-spacing: 0.3ch;
+		width: 100%;
+		display: flex;
+		align-items: center;
+	}
+
 	a{
 		display: flex;
 		align-items: center;
-		height: 5rem;
-		transition: @trans-speed;
+		height: @nav-width;
+        padding: 0 @space;
 	}
 
 	span{
-		display: none;
-		margin-left: 1rem;
+		max-width: 0;
+		overflow: hidden;
 	}
 
 	svg{
-		width: 2rem;
-		height: 2rem;
-		min-height: 2rem;
-		min-width: 2rem;
-		margin: 0 1.5rem;
-		transition: @trans-speed;
+		width: @icon-size;
+		height: @icon-size;
+		margin: 0 @space;
 	}
 
 	// large screen
 	@media only screen and (min-width: 600px){
 		nav{
-			top: 0;
-			width: 5rem;
 			height: 100vh;
+            width: @nav-width;
+		}
 
-			&:hover{
-				width: 16rem;
-
-				span{
-					display: inline;
-				}
-
-				.logo{
-					svg{
-						margin-left: 12rem;
-					}
-
-					span{
-						left: 0;
-					}
-				}
+		nav:hover{
+            width: unset;
+			span{
+				margin: 0 @space;
+				max-width: 300px;
+				display: inline;
+                transition: max-width @trans-speed ease;
 			}
 		}
 	}
