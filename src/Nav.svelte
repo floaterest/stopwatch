@@ -34,9 +34,9 @@
 
 <style lang="less">
 	@trans-speed: 600ms;
-	@nav-width: 4rem;
+	@nav-size: 4rem;
 	@icon-size: 2rem;
-	@space: calc((@nav-width - @icon-size) / 4);
+	@space: calc((@nav-size - @icon-size) / 4);
 
 	nav{
 		position: fixed;
@@ -48,16 +48,8 @@
 		margin: 0;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
 		height: 100%;
 
-		li{
-			width: 100%;
-
-			&:last-child{
-				margin-top: auto;
-			}
-		}
 
 	}
 
@@ -77,7 +69,7 @@
 	a, .logo{
 		display: flex;
 		align-items: center;
-		height: @nav-width;
+		height: @nav-size;
 		padding: 0 @space;
 		// text
 		span{
@@ -96,11 +88,21 @@
 
 	// large screen
 	@media only screen and (min-width: 600px){
+		// vertical nav
 		nav{
 			height: 100vh;
-			width: @nav-width;
+			width: @nav-size;
 		}
 
+		li{
+			width: 100%;
+			// last child to bottom
+			&:last-child{
+				margin-top: auto;
+			}
+		}
+
+		// expand nav on hover
 		nav:hover{
 			width: unset;
 
@@ -109,6 +111,30 @@
 				max-width: 300px;
 				display: inline;
 				transition: max-width @trans-speed ease;
+			}
+		}
+	}
+
+	// small screen
+	@media only screen and (max-width: 600px){
+		// horizontal nav
+		nav{
+			bottom: 0;
+			width: 100vw;
+			height: @nav-size;
+		}
+
+		ul{
+			flex-direction: row;
+
+		}
+
+		li{
+			justify-content: center;
+			height: 100%;
+			// last child to right
+			&:last-child{
+				margin-left: auto;
 			}
 		}
 	}
