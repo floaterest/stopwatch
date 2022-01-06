@@ -40,10 +40,6 @@
 
 	nav{
 		position: fixed;
-		// change logo and title color on hover
-		&:hover .logo{
-			color: #39c5bb;
-		}
 	}
 
 	ul{
@@ -66,6 +62,7 @@
 
 	.logo{
         &:extend(a);
+        color: var(--accent);
 		font-size: 1.5rem;
 		font-weight: bold;
 		text-transform: uppercase;
