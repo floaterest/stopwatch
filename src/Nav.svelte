@@ -36,7 +36,7 @@
 	@trans-speed: 600ms;
 	@nav-width: 4rem;
 	@icon-size: 2rem;
-    @space: calc((@nav-width - @icon-size)/4);
+	@space: calc((@nav-width - @icon-size) / 4);
 
 	nav{
 		position: fixed;
@@ -58,11 +58,13 @@
 				margin-top: auto;
 			}
 		}
+
 	}
+
 
 	.logo{
         &:extend(a);
-        color: var(--accent);
+		color: var(--accent);
 		font-size: 1.5rem;
 		font-weight: bold;
 		text-transform: uppercase;
@@ -77,34 +79,37 @@
 		display: flex;
 		align-items: center;
 		height: @nav-width;
-        padding: 0 @space;
+		padding: 0 @space;
+        // text
+		span{
+			max-width: 0;
+			overflow: hidden;
+		}
+
+		// icon
+		svg{
+			width: @icon-size;
+			height: @icon-size;
+			margin: 0 @space;
+		}
 	}
 
-	span{
-		max-width: 0;
-		overflow: hidden;
-	}
-
-	svg{
-		width: @icon-size;
-		height: @icon-size;
-		margin: 0 @space;
-	}
 
 	// large screen
 	@media only screen and (min-width: 600px){
 		nav{
 			height: 100vh;
-            width: @nav-width;
+			width: @nav-width;
 		}
 
 		nav:hover{
-            width: unset;
+			width: unset;
+
 			span{
 				margin: 0 @space;
 				max-width: 300px;
 				display: inline;
-                transition: max-width @trans-speed ease;
+				transition: max-width @trans-speed ease;
 			}
 		}
 	}
