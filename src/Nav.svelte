@@ -63,7 +63,6 @@
 
 
 	.logo{
-        &:extend(a);
 		color: var(--accent);
 		font-size: 1.5rem;
 		font-weight: bold;
@@ -75,12 +74,12 @@
 		align-items: center;
 	}
 
-	a{
+	a, .logo{
 		display: flex;
 		align-items: center;
 		height: @nav-width;
 		padding: 0 @space;
-        // text
+		// text
 		span{
 			max-width: 0;
 			overflow: hidden;
