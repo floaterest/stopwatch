@@ -1,6 +1,14 @@
-<nav>
+<script lang="ts">
+    let expanded = false;
+
+    function toggleExpand(){
+        return expanded = !expanded;
+    }
+</script>
+
+<nav class:expanded>
     <ul>
-        <li>
+        <li on:click={toggleExpand}>
             <div class="logo">
                 <span>Stopwatch</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -49,21 +57,16 @@
 		display: flex;
 		flex-direction: column;
 		height: 100%;
-
-
 	}
 
 
 	.logo{
 		color: var(--accent);
+		cursor: pointer;
 		font-size: 1.5rem;
 		font-weight: bold;
 		text-transform: uppercase;
-		text-align: center;
 		letter-spacing: 0.3ch;
-		width: 100%;
-		display: flex;
-		align-items: center;
 	}
 
 	a, .logo{
@@ -92,27 +95,23 @@
 		nav{
 			height: 100vh;
 			width: @nav-size;
-		}
 
-		li{
-			width: 100%;
-			// last child to bottom
-			&:last-child{
-				margin-top: auto;
+			&.expanded{
+				width: unset;
+
+				span{
+					margin: 0 @space;
+					max-width: 300px;
+					transition: max-width @trans-speed ease;
+				}
 			}
 		}
 
-		// expand nav on hover
-		nav:hover{
-			width: unset;
-
-			span{
-				margin: 0 @space;
-				max-width: 300px;
-				display: inline;
-				transition: max-width @trans-speed ease;
-			}
+		// last child to bottom
+		li:last-child{
+			margin-top: auto;
 		}
+
 	}
 
 	// small screen
