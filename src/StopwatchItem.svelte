@@ -6,9 +6,9 @@
 <fieldset>
     <legend>{title}</legend>
     <code>00:00:00</code>
-    <label class="switch">
+    <label>
         <input type="checkbox" bind:checked="{checked}">
-        <span class="label">{checked ? 'pause' : 'start'}</span>
+        <span>{checked ? 'pause' : 'start'}</span>
     </label>
 </fieldset>
 
@@ -24,74 +24,30 @@
 		width: 100%;
 		overflow: hidden;
 		background-color: black;
+
+		legend{
+			margin-left: 0.5rem;
+		}
+
+		code{
+			padding: 0 1.2rem;
+		}
 	}
 
-	legend{
-		margin-left: 0.5rem;
-	}
-
-	code{
-		padding: 0 1.2rem;
-	}
-
-	button{
-		width: 100%;
-		text-transform: uppercase;
-		background-color: var(--background-primary);
-		color: var(--text-primary);
-		border: none;
-		/* don't override font size */
-		font-size: 1em;
-	}
 
 	label{
 		width: 100%;
-		cursor: pointer;
-		padding: 0;
-	}
-
-	input{
-		display: none;
-		box-sizing: content-box;
-	}
-
-	span{
-		text-align: center;
-		justify-content: center;
-		color: var(--text-primary);
 		background-color: var(--background-primary);
-		box-shadow: none;
-		position: relative;
-		font-size: 1em;
-		text-transform: uppercase;
-		border-radius: inherit;
-		box-sizing: content-box;
-		transition: All 0.3s ease;
-		width: 100%;
-		display: flex;
+		cursor: pointer;
 
-		&:before, &:after{
-			position: absolute;
-			top: 50%;
-			margin-top: -.5em;
-			line-height: 1;
-			transition: inherit;
-			box-sizing: content-box;
+		input{
+			display: none;
 		}
 
-		&:before{
-			color: #aaa;
-			text-shadow: 0 1px rgba(255, 255, 255, 0.5);
-			right: inherit;
-			left: 11px;
-
-		}
-
-		&:after{
-			color: #9370db;
-			left: 11px;
-			text-shadow: 0 1px rgba(0, 0, 0, 0.2);
-			opacity: 0;
+		span{
+			display: flex;
+			justify-content: center;
+			text-transform: uppercase;
 		}
 	}
 </style>
