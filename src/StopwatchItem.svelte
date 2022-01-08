@@ -1,14 +1,15 @@
 <script lang="ts">
     export let title: string;
-    let checked: boolean;
+    export let time: string = '00:00:00';
+    export let started: boolean;
 </script>
 
 <fieldset>
     <legend>{title}</legend>
-    <code>00:00:00</code>
+    <code>{time}</code>
     <label>
-        <input type="checkbox" bind:checked="{checked}">
-        <span>{checked ? 'pause' : 'start'}</span>
+        <input type="checkbox" bind:checked="{started}">
+        <span>{started ? 'pause' : 'start'}</span>
     </label>
 </fieldset>
 
@@ -26,14 +27,13 @@
 		background-color: black;
 
 		legend{
-			margin-left: 0.5rem;
+			margin-left: 1rem;
 		}
 
 		code{
 			padding: 0 1.2rem;
 		}
 	}
-
 
 	label{
 		width: 100%;
