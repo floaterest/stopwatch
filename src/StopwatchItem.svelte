@@ -1,14 +1,16 @@
 <script lang="ts">
-    export let title: string;
-    export let time: string = '00:00:00';
-    export let started: boolean;
+    import Stopwatch from './Stopwatch';
+
+    export let stopwatch: Stopwatch;
+    let { title, started, time } = stopwatch;
+    export let onChange: (title: string, started: boolean) => void;
 </script>
 
 <fieldset>
     <legend>{title}</legend>
-    <code>{time}</code>
+    <code class:started>{time}</code>
     <label>
-        <input type="checkbox" bind:checked="{started}">
+        <input type="checkbox" bind:checked="{started}" on:change={()=>onChange(title,started)}>
         <span>{started ? 'pause' : 'start'}</span>
     </label>
 </fieldset>
