@@ -34,6 +34,10 @@
 
 		code{
 			padding: 0 1.2rem;
+
+			&.started{
+				background-color: darkgreen;
+			}
 		}
 	}
 
