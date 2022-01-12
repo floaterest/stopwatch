@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Stopwatch from './Stopwatch';
+    import type Stopwatch from './Stopwatch';
 
     export let stopwatch: Stopwatch;
     let { title, started, time } = stopwatch;
