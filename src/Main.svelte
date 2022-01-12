@@ -1,13 +1,13 @@
 <script lang="ts">
     import StopwatchItem from './StopwatchItem.svelte';
-    import Stopwatch from './Stopwatch';
+    import type Stopwatch from './Stopwatch';
 
     function tostr(seconds: number){
-        const time = [];
-        time.push(Math.floor(seconds / 3600));
-        time.push(Math.floor((seconds % 3600) / 60));
-        time.push(seconds % 60);
-        return time.map(t => t.toString().padStart(2, '0')).join(':');
+        return [
+            Math.floor(seconds / 3600), // hours
+            Math.floor((seconds % 3600) / 60), // minutes
+            seconds % 60, // seconds
+        ].map(t => t.toString().padStart(2, '0')).join(':');
     }
 
     const titles = Array.from(Array(30), (_, i) => i).map(i => i.toString().padStart(3, '0'));
