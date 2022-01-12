@@ -34,6 +34,8 @@
 
 		code{
 			padding: 0 1.2rem;
+			width: 100%;
+			text-align: center;
 
 			&.started{
 				background-color: darkgreen;
