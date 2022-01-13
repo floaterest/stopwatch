@@ -9,10 +9,7 @@
 <fieldset>
     <legend>{title}</legend>
     <code class:started>{time}</code>
-    <label>
-        <input type="checkbox" bind:checked="{started}" on:change={()=>onChange(title,started)}>
-        <span>{started ? 'pause' : 'start'}</span>
-    </label>
+    <button>{started ? 'pause' : 'start'}</button>
 </fieldset>
 
 <style lang="less">
@@ -43,19 +40,14 @@
 		}
 	}
 
-	label{
+	button{
 		width: 100%;
 		background-color: var(--background-primary);
+		border: none;
+		color: var(--text-primary);
+		text-transform: uppercase;
+		font-size: 1em;
+		padding: 0;
 		cursor: pointer;
-
-		input{
-			display: none;
-		}
-
-		span{
-			display: flex;
-			justify-content: center;
-			text-transform: uppercase;
-		}
 	}
 </style>
