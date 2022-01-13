@@ -1,9 +1,7 @@
 export default interface Stopwatch{
     title: string
-    /*
-    number of seconds elapsed since 'time'
-     */
-    elapsed: number
-    time: string
+    timestamp: number
+    seconds: number
     started: boolean
+    time: string
 }
