@@ -2,14 +2,13 @@
     import type Stopwatch from './Stopwatch';
 
     export let stopwatch: Stopwatch;
-    let { title, started, time } = stopwatch;
-    export let onChange: (title: string, started: boolean) => void;
+    export let onClick: (stopwatch: Stopwatch) => void;
 </script>
 
 <fieldset>
-    <legend>{title}</legend>
-    <code class:started>{time}</code>
-    <button>{started ? 'pause' : 'start'}</button>
+    <legend>{stopwatch.title}</legend>
+    <code class:started={stopwatch.started}>{stopwatch.time}</code>
+    <button on:click={()=>onClick(stopwatch)}>{stopwatch.started ? 'pause' : 'start'}</button>
 </fieldset>
 
 <style lang="less">
