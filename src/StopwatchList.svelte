@@ -2,32 +2,39 @@
     import StopwatchItem from './StopwatchItem.svelte';
     import type Stopwatch from './Stopwatch';
 
-    function tostr(seconds: number){
-        return [
-            Math.floor(seconds / 3600), // hours
-            Math.floor((seconds % 3600) / 60), // minutes
-            seconds % 60, // seconds
-        ].map(t => t.toString().padStart(2, '0')).join(':');
+    function time(seconds: number){
+        // convert to HH:MM:SS
+        let h: number | string = Math.floor(seconds / 3600);
+        let m: number | string = Math.floor(seconds / 60) % 60;
+        let s: number | string = seconds % 60;
+
+        if(h < 10) h = '0' + h;
+        if(m < 10) m = '0' + m;
+        if(s < 10) s = '0' + s;
+        return h + ':' + m + ':' + s;
     }
 
     const titles = Array.from(Array(30), (_, i) => i).map(i => i.toString().padStart(3, '0'));
     let sws: Stopwatch[] = titles.map(t => {
         return {
             title: t,
+            timestamp: new Date() as number,
+            seconds: 0,
             started: false,
-            elapsed: 0,
-            time: tostr(0),
+            time: time(0),
         };
     });
 
-    function onChange(title: string, started: boolean){
-        console.log(title, started);
+    function onClick(s: Stopwatch){
+        console.log(s.title, s.started);
+        s.started = !s.started;
+        sws = sws.map(sw => sw.title === s.title ? s : sw);
     }
 </script>
 
 <section>
     {#each sws as stopwatch}
-        <StopwatchItem {stopwatch} {onChange}/>
+        <StopwatchItem {stopwatch} {onClick}/>
     {/each}
 </section>
 
