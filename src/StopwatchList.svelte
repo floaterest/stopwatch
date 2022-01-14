@@ -2,6 +2,24 @@
     import StopwatchItem from './StopwatchItem.svelte';
     import type Stopwatch from './Stopwatch';
 
+    // create sample stopwatches
+    const titles = Array.from(Array(8), (_, i) => i).map(i => i.toString().padStart(3, '0'));
+    let stopwatches: Stopwatch[] = titles.map(t => {
+        return {
+            title: t,
+            timestamp: new Date().getTime(),
+            seconds: 0,
+            started: false,
+            time: time(0),
+        };
+    });
+
+    let interval: number;
+    let counting = 0;
+
+    /**
+     * convert seconds to HH:MM:SS
+     */
     function time(seconds: number){
         // convert to HH:MM:SS
         let h: number | string = Math.floor(seconds / 3600);
@@ -14,25 +32,19 @@
         return h + ':' + m + ':' + s;
     }
 
-    const titles = Array.from(Array(8), (_, i) => i).map(i => i.toString().padStart(3, '0'));
-    let sws: Stopwatch[] = titles.map(t => {
-        return {
-            title: t,
-            timestamp: new Date().getTime(),
-            seconds: 0,
-            started: false,
-            time: time(0),
-        };
-    });
-    let interval: number;
-    let counting = 0;
-
+    /**
+     * returns number of seconds since start time to now
+     * @param timestamp start timestamp
+     */
     function delta(timestamp: number){
         return Math.floor((new Date().getTime() - timestamp) / 1000);
     }
 
+    /**
+     * find all started stopwatches and update their displayed time
+     */
     function update(){
-        sws = sws.map(sw => {
+        stopwatches = stopwatches.map(sw => {
             if(sw.started){
                 sw.time = time(delta(sw.timestamp));
             }
@@ -40,32 +52,37 @@
         });
     }
 
-    function onClick(s: Stopwatch){
-        s.started = !s.started;
-        if(s.started){
+    /**
+     * toggle clicked stopwatch and set/clear interval if needed
+     */
+    function onClick(sw: Stopwatch){
+        sw.started = !sw.started;
+        if(sw.started){
             counting++;
             // update timestamp
-            s.timestamp = new Date().getTime();
+            sw.timestamp = new Date().getTime();
+            // set the interval if not set yet
             if(!interval){
+                console.debug('created new interval');
                 interval = setInterval(update, 1000) as number;
             }
         }else{
             counting--;
             // update seconds
-            s.seconds += delta(s.timestamp);
-            s.time = time(s.seconds);
+            sw.seconds += delta(sw.timestamp);
+            // clear interval if all stopwatches are stopped
             if(!counting){
+                console.debug('cleared interval')
                 clearInterval(interval);
                 interval = null;
             }
         }
-        sws = sws.map(sw => sw.title === s.title ? s : sw);
-        console.table(sws);
+        stopwatches = stopwatches.map(sw => sw.title === sw.title ? sw : sw);
     }
 </script>
 
 <section>
-    {#each sws as stopwatch}
+    {#each stopwatches as stopwatch}
         <StopwatchItem {stopwatch} {onClick}/>
     {/each}
 </section>
