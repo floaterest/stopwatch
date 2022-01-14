@@ -20,11 +20,12 @@
 
 :root{
     --background-primary: #222;
-    --background-secondary: #131313;
-    --text-primary: #f2f2f2;
+    --background-dark: #191919;
+    --background-darker: #131313;
+    --text-color: #f2f2f2;
     --accent: #39c5bb;
 
-    --a-color: #fce566;
+    --anchor-color: #fce566;
 
     --font-lat: 'Source Sans Pro';
     --font-jpn: 'UD Digi Kyokasho N-R', 'Kosugi Maru';
@@ -36,16 +37,12 @@
 body{
     padding: 0;
     margin: 0;
-    color: var(--text-primary);
+    color: var(--text-color);
     background-color: var(--background-primary);
 }
 
-nav{
-    background-color: var(--background-secondary);
-}
-
 a{
-    color: var(--a-color);
+    color: var(--anchor-color);
     text-decoration: none;
 }
 
