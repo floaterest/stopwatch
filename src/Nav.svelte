@@ -48,6 +48,7 @@
 
 	nav{
 		position: fixed;
+		background-color: var(--background-darker);
 	}
 
 	ul{

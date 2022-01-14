@@ -3,12 +3,18 @@
 
     export let stopwatch: Stopwatch;
     export let onClick: (stopwatch: Stopwatch) => void;
+
+    function please(){
+        console.log('dont update');
+    }
 </script>
 
 <fieldset>
     <legend>{stopwatch.title}</legend>
     <code class:started={stopwatch.started}>{stopwatch.time}</code>
-    <button on:click={()=>onClick(stopwatch)}>{stopwatch.started ? 'pause' : 'start'}</button>
+    <button on:click={()=>onClick(stopwatch)} on:dblclick={please}>
+        {stopwatch.started ? 'pause' : 'start'}
+    </button>
 </fieldset>
 
 <style lang="less">
@@ -22,7 +28,7 @@
 		height: 100%;
 		width: 100%;
 		overflow: hidden;
-		background-color: black;
+		background-color: var(--background-darker);
 
 		legend{
 			margin-left: 1rem;
@@ -43,7 +49,7 @@
 		width: 100%;
 		background-color: var(--background-primary);
 		border: none;
-		color: var(--text-primary);
+		color: var(--text-color);
 		text-transform: uppercase;
 		font-size: 1em;
 		padding: 0;
