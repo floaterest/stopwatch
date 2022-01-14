@@ -24,21 +24,40 @@
             time: time(0),
         };
     });
+    let interval: number;
+    let counting = 0;
 
     function delta(timestamp: number){
         return Math.floor((new Date().getTime() - timestamp) / 1000);
     }
 
+    function update(){
+        sws = sws.map(sw => {
+            if(sw.started){
+                sw.time = time(delta(sw.timestamp));
+            }
+            return sw;
+        });
+    }
 
     function onClick(s: Stopwatch){
         s.started = !s.started;
         if(s.started){
+            counting++;
             // update timestamp
             s.timestamp = new Date().getTime();
+            if(!interval){
+                interval = setInterval(update, 1000) as number;
+            }
         }else{
+            counting--;
             // update seconds
             s.seconds += delta(s.timestamp);
             s.time = time(s.seconds);
+            if(!counting){
+                clearInterval(interval);
+                interval = null;
+            }
         }
         sws = sws.map(sw => sw.title === s.title ? s : sw);
         console.table(sws);
