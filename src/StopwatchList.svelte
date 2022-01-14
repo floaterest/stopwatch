@@ -14,21 +14,34 @@
         return h + ':' + m + ':' + s;
     }
 
-    const titles = Array.from(Array(30), (_, i) => i).map(i => i.toString().padStart(3, '0'));
+    const titles = Array.from(Array(8), (_, i) => i).map(i => i.toString().padStart(3, '0'));
     let sws: Stopwatch[] = titles.map(t => {
         return {
             title: t,
-            timestamp: new Date() as number,
+            timestamp: new Date().getTime(),
             seconds: 0,
             started: false,
             time: time(0),
         };
     });
 
+    function delta(timestamp: number){
+        return Math.floor((new Date().getTime() - timestamp) / 1000);
+    }
+
+
     function onClick(s: Stopwatch){
-        console.log(s.title, s.started);
         s.started = !s.started;
+        if(s.started){
+            // update timestamp
+            s.timestamp = new Date().getTime();
+        }else{
+            // update seconds
+            s.seconds += delta(s.timestamp);
+            s.time = time(s.seconds);
+        }
         sws = sws.map(sw => sw.title === s.title ? s : sw);
+        console.table(sws);
     }
 </script>
 
