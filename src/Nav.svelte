@@ -78,6 +78,7 @@
 		span{
 			max-width: 0;
 			overflow: hidden;
+            white-space: nowrap;
 		}
 
 		// icon
