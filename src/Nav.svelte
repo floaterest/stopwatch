@@ -72,13 +72,14 @@
 	a, .logo{
 		display: flex;
 		align-items: center;
+        justify-content: center;
 		height: @nav-size;
 		padding: 0 @space;
 		// text
 		span{
 			max-width: 0;
 			overflow: hidden;
-            white-space: nowrap;
+			white-space: nowrap;
 		}
 
 		// icon
