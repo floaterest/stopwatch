@@ -49,25 +49,24 @@
 	nav{
 		position: fixed;
 		background-color: var(--background-darker);
-	}
 
-	ul{
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-	}
+		ul{
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
 
-
-	.logo{
-		color: var(--accent);
-		cursor: pointer;
-		font-size: 1.5rem;
-		font-weight: bold;
-		text-transform: uppercase;
-		letter-spacing: 0.3ch;
+			.logo{
+				color: var(--accent);
+				cursor: pointer;
+				font-size: 1.5rem;
+				font-weight: bold;
+				text-transform: uppercase;
+				letter-spacing: 0.3ch;
+			}
+		}
 	}
 
 	a, .logo{
@@ -88,7 +87,6 @@
 			margin: 0 @space;
 		}
 	}
-
 
 	// large screen
 	@media only screen and (min-width: 600px){
@@ -122,11 +120,11 @@
 			bottom: 0;
 			width: 100vw;
 			height: @nav-size;
-		}
 
-		ul{
-			flex-direction: row;
+			ul{
+				flex-direction: row;
 
+			}
 		}
 
 		li{
