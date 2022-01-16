@@ -4,15 +4,12 @@
     export let stopwatch: Stopwatch;
     export let onClick: (stopwatch: Stopwatch) => void;
 
-    function please(){
-        console.log('dont update');
-    }
 </script>
 
 <fieldset>
     <legend>{stopwatch.title}</legend>
     <code class:started={stopwatch.started}>{stopwatch.time}</code>
-    <button on:click={()=>onClick(stopwatch)} on:dblclick={please}>
+    <button on:click={()=>onClick(stopwatch)}>
         {stopwatch.started ? 'pause' : 'start'}
     </button>
 </fieldset>
