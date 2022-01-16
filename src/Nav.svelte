@@ -72,7 +72,6 @@
 	a, .logo{
 		display: flex;
 		align-items: center;
-        justify-content: center;
 		height: @nav-size;
 		padding: 0 @space;
 		// text
