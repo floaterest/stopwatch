@@ -97,6 +97,18 @@
 			height: 100vh;
 			width: @nav-size;
 
+			&:not(.expanded) a:hover span{
+				position: fixed;
+				max-width: 300px;
+				font-weight: bold;
+				left: calc(@nav-size - 0.5rem);
+				background: var(--text-color);
+				color: var(--background-darker);
+				border-radius: 0.3rem;
+				padding: 0 0.5rem;
+				opacity: 0.8;
+			}
+
 			&.expanded{
 				width: unset;
 
