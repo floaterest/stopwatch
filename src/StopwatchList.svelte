@@ -16,7 +16,7 @@
 
     let interval: number;
     let counting = 0;
-    let doubleClick = false;
+    let doubleClick: string;
 
     /**
      * convert seconds to HH:MM:SS
@@ -58,7 +58,7 @@
      */
     function onClick(sw: Stopwatch){
         // if this click is the second click from a double click
-        if(doubleClick){
+        if(doubleClick == sw.title){
             // pause all stopwatches
             stopwatches = stopwatches.map(sw => {
                 sw.started = false;
@@ -93,8 +93,8 @@
          * according to Windows, the default timing of a double click is 500ms
          * source: https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setdoubleclicktime
          */
-        doubleClick = true;
-        setTimeout(() => doubleClick = false, 500);
+        doubleClick = sw.title;
+        setTimeout(() => doubleClick = null, 500);
 
         // update the clicked stopwatch
         stopwatches = stopwatches.map(sw => sw.title === sw.title ? sw : sw);
