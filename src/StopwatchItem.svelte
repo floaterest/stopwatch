@@ -26,6 +26,7 @@
 		width: 100%;
 		overflow: hidden;
 		background-color: var(--background-darker);
+		border-style: solid;
 
 		legend{
 			margin-left: 1rem;
