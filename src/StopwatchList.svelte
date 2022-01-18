@@ -47,7 +47,7 @@
     function update(){
         stopwatches = stopwatches.map(sw => {
             if(sw.started){
-                sw.time = time(delta(sw.timestamp));
+                sw.time = time(sw.seconds + delta(sw.timestamp));
             }
             return sw;
         });
@@ -87,6 +87,7 @@
                 clearInterval(interval);
                 interval = null;
             }
+            console.table(stopwatches);
         }
         /**
          * the next click in 500ms will be considered a double click
