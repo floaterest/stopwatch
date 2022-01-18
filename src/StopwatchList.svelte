@@ -53,6 +53,19 @@
         });
     }
 
+
+    function stop(sw: Stopwatch, int: number, count: number){
+        count--;
+        // update seconds
+        sw.seconds += delta(sw.timestamp);
+        // clear interval if all stopwatches are stopped
+        if(!counting){
+            console.debug('cleared interval');
+            clearInterval(interval);
+            interval = null;
+        }
+    }
+
     /**
      * toggle clicked stopwatch and set/clear interval if needed
      */
@@ -78,16 +91,7 @@
                 interval = setInterval(update, 1000) as number;
             }
         }else{
-            counting--;
-            // update seconds
-            sw.seconds += delta(sw.timestamp);
-            // clear interval if all stopwatches are stopped
-            if(!counting){
-                console.debug('cleared interval');
-                clearInterval(interval);
-                interval = null;
-            }
-            console.table(stopwatches);
+            stop(sw);
         }
         /**
          * the next click in 500ms will be considered a double click
