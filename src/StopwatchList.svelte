@@ -17,6 +17,7 @@
     let interval: number;
     let counting = 0;
     let doubleClick: string;
+    let now: number;
 
     /**
      * convert seconds to HH:MM:SS
@@ -38,13 +39,14 @@
      * @param timestamp start timestamp
      */
     function delta(timestamp: number){
-        return Math.floor((new Date().getTime() - timestamp) / 1000);
+        return Math.floor((now - timestamp) / 1000);
     }
 
     /**
      * find all started stopwatches and update their displayed time
      */
     function update(){
+        now = new Date().getTime()
         stopwatches = stopwatches.map(sw => {
             if(sw.started){
                 sw.time = time(sw.seconds + delta(sw.timestamp));
@@ -53,30 +55,26 @@
         });
     }
 
-
-    function stop(sw: Stopwatch, int: number, count: number){
-        count--;
-        // update seconds
-        sw.seconds += delta(sw.timestamp);
-        // clear interval if all stopwatches are stopped
-        if(!counting){
-            console.debug('cleared interval');
-            clearInterval(interval);
-            interval = null;
-        }
-    }
-
     /**
      * toggle clicked stopwatch and set/clear interval if needed
      */
     function onClick(sw: Stopwatch){
+        now = new Date().getTime();
         // if this click is the second click from a double click
         if(doubleClick == sw.title){
+            console.log('db');
             // pause all stopwatches
             stopwatches = stopwatches.map(sw => {
                 sw.started = false;
+                sw.seconds += delta(sw.timestamp)
                 return sw;
             });
+            // reset to 0 counting stopwatches and clear interval
+            console.debug('cleared interval');
+            clearInterval(interval);
+            interval = null;
+            counting = 0;
+
             return;
         }
 
@@ -84,14 +82,22 @@
         if(sw.started){
             counting++;
             // update timestamp
-            sw.timestamp = new Date().getTime();
+            sw.timestamp = now
             // set the interval if not set yet
             if(!interval){
                 console.debug('created new interval');
                 interval = setInterval(update, 1000) as number;
             }
         }else{
-            stop(sw);
+            counting--;
+            // update seconds
+            sw.seconds += delta(sw.timestamp);
+            // clear interval if all stopwatches are stopped
+            if(!counting){
+                console.debug('cleared interval');
+                clearInterval(interval);
+                interval = null;
+            }
         }
         /**
          * the next click in 500ms will be considered a double click
