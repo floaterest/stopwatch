@@ -62,7 +62,6 @@
         now = new Date().getTime();
         // if this click is the second click from a double click
         if(doubleClick == sw.title){
-            console.log('db');
             // pause all stopwatches
             stopwatches = stopwatches.map(sw => {
                 sw.started = false;
@@ -70,7 +69,7 @@
                 return sw;
             });
             // reset to 0 counting stopwatches and clear interval
-            console.debug('cleared interval');
+            console.debug('cleared interval after double click');
             clearInterval(interval);
             interval = null;
             counting = 0;
