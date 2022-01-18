@@ -60,10 +60,16 @@
         // if this click is the second click from a double click
         if(doubleClick == sw.title){
             // pause all stopwatches
+            let now = new Date().getTime();
             stopwatches = stopwatches.map(sw => {
                 sw.started = false;
+                sw.seconds += Math.floor((now - sw.timestamp) / 1000);
                 return sw;
             });
+            console.debug('cleared interval');
+            clearInterval(interval);
+            interval = null;
+            counting = 0;
             return;
         }
 
