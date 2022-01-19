@@ -46,7 +46,7 @@
      * find all started stopwatches and update their displayed time
      */
     function update(){
-        now = new Date().getTime()
+        now = new Date().getTime();
         stopwatches = stopwatches.map(sw => {
             if(sw.started){
                 sw.time = time(sw.seconds + delta(sw.timestamp));
@@ -62,15 +62,16 @@
         now = new Date().getTime();
         // if this click is the second click from a double click
         if(doubleClick == sw.title){
-            console.log('db');
             // pause all stopwatches
             stopwatches = stopwatches.map(sw => {
-                sw.started = false;
-                sw.seconds += delta(sw.timestamp)
+                if(sw.started){
+                    sw.started = false;
+                    sw.seconds += delta(sw.timestamp);
+                }
                 return sw;
             });
             // reset to 0 counting stopwatches and clear interval
-            console.debug('cleared interval');
+            console.debug('cleared interval after double click');
             clearInterval(interval);
             interval = null;
             counting = 0;
@@ -82,7 +83,7 @@
         if(sw.started){
             counting++;
             // update timestamp
-            sw.timestamp = now
+            sw.timestamp = now;
             // set the interval if not set yet
             if(!interval){
                 console.debug('created new interval');
@@ -109,6 +110,7 @@
 
         // update the clicked stopwatch
         stopwatches = stopwatches.map(sw => sw.title === sw.title ? sw : sw);
+        console.table(stopwatches);
     }
 </script>
 
