@@ -110,7 +110,6 @@
 
         // update the clicked stopwatch
         stopwatches = stopwatches.map(sw => sw.title === sw.title ? sw : sw);
-        console.table(stopwatches);
     }
 </script>
 
