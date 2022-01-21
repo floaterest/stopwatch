@@ -47,7 +47,7 @@
 		width: 100%;
 		background-color: var(--background-primary);
 		border: none;
-		color: var(--text-color);
+		color: unset;
 		text-transform: uppercase;
 		font-size: 1em;
 		padding: 0;
