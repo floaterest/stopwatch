@@ -85,6 +85,10 @@
 			border: none;
 			background-color: unset;
 			color: unset;
+
+			span{
+				font-size: 1rem;
+			}
 		}
 
 		li > *{
