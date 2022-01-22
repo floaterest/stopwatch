@@ -82,6 +82,7 @@
 
 		// no special styles for button
 		button{
+			cursor: pointer;
 			border: none;
 			background-color: unset;
 			color: unset;
