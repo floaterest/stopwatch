@@ -120,7 +120,8 @@
 			height: 100vh;
 			width: @nav-size;
 
-			&:not(.expanded) a:hover span{
+            // preview text except first child (logo)
+			&:not(.expanded) li > *:hover span:not(:first-child){
 				position: fixed;
 				max-width: 300px;
 				font-weight: bold;
