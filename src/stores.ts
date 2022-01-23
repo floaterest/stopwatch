@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import type Stopwatch from './Stopwatch';
 
 export const addStopwatch = (() => {
     const { subscribe, update } = writable(false);
@@ -8,3 +9,5 @@ export const addStopwatch = (() => {
         toggle: () => update(add => !add),
     };
 })();
+
+export const stopwatches = writable<Stopwatch[]>([]);
