@@ -16,7 +16,6 @@
 <style>
     main{
         padding: 1rem;
-
     }
 
     /* large screen */
