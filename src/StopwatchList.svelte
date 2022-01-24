@@ -8,15 +8,13 @@
     // create sample stopwatches
     if(!$stopwatches.length){
         const titles = Array.from(Array(8), (_, i) => i).map(i => i.toString().padStart(3, '0'));
-        stopwatches.set(titles.map(t => {
-            return {
-                title: t,
-                timestamp: new Date().getTime(),
-                seconds: 0,
-                started: false,
-                time: stopwatches.time(0),
-            };
-        }));
+        stopwatches.set(titles.map(t => ({
+            title: t,
+            timestamp: new Date().getTime(),
+            seconds: 0,
+            started: false,
+            time: stopwatches.time(0),
+        })));
     }
     let interval: number;
     let counting = 0;
