@@ -3,10 +3,17 @@
 
     let error = '';
 
-    function check(e: Event){
+    function check(e: Event | string){
         let title: string;
-        if(!(title = (e.target as HTMLInputElement).value)){
-            return error = 'Title cannot be empty string!';
+        if(typeof e === 'string'){
+            title = e;
+            if(!title){
+                return error = 'Title cannot be empty string!';
+            }
+        }else{
+            if(!(title = (e.target as HTMLInputElement).value)){
+                return error = 'Title cannot be empty string!';
+            }
         }
         // no leading/trailing space
         title = title.trim();
@@ -18,16 +25,23 @@
     }
 
     function create(e: FocusEvent){
+        // suppose the title has passed `check()`
         let title = (e.target as HTMLInputElement).value;
-        stopwatches.update(sws => [
-            ...sws, {
-                title: title,
-                timestamp: new Date().getTime(),
-                seconds: 0,
-                started: false,
-                time: stopwatches.time(0),
-            },
-        ]);
+
+        //#region add multiple stopwatches for space separated input
+        let titles = title.split(' ');
+        // check each title
+        if(titles.some(t => check(t))) return;
+        let toAdd = titles.map(t => ({
+            title: t,
+            timestamp: new Date().getTime(),
+            seconds: 0,
+            started: false,
+            time: stopwatches.time(0),
+        }));
+        //#endregion add multiple stopwatches
+
+        stopwatches.update(sws => [ ...sws, ...toAdd ]);
         console.debug('created ', title);
     }
 </script>
