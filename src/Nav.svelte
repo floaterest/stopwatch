@@ -92,7 +92,6 @@
 		}
 
 		li > *{
-
 			display: flex;
 			align-items: center;
 			height: @nav-size;
@@ -120,7 +119,7 @@
 			height: 100vh;
 			width: @nav-size;
 
-            // preview text except first child (logo)
+			// preview text except first child (logo)
 			&:not(.expanded) li > *:hover span:not(:first-child){
 				position: fixed;
 				max-width: 300px;

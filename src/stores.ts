@@ -23,8 +23,7 @@ export const addStopwatch = (() => {
         subscribe,
         toggle: () => update(add => !add),
     };
-})();
-
+})() as Writable<boolean> & { toggle: () => void };
 
 export const stopwatches = (() => {
     const { subscribe, update, set } = writable<Stopwatch[]>([]);
