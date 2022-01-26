@@ -3,13 +3,12 @@
 
     export let stopwatch: Stopwatch;
     export let onClick: (stopwatch: Stopwatch) => void;
-
 </script>
 
 <fieldset>
     <legend>{stopwatch.title}</legend>
     <code class:started={stopwatch.started}>{stopwatch.time}</code>
-    <button on:click={()=>onClick(stopwatch)}>
+    <button on:click={() => onClick(stopwatch)}>
         {stopwatch.started ? 'pause' : 'start'}
     </button>
 </fieldset>
