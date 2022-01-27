@@ -107,7 +107,7 @@
 </section>
 
 <style>
-    section{
+    :global(section){
         display: grid;
         gap: 1rem;
         font-size: 3rem;
