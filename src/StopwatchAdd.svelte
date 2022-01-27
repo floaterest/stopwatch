@@ -63,9 +63,11 @@
         <span>{message}</span>
     {/if}
 </label>
-{#each previews as stopwatch}
-    <StopwatchItem {stopwatch} onClick={null}/>
-{/each}
+<section>
+    {#each previews as stopwatch}
+        <StopwatchItem {stopwatch} onClick={null}/>
+    {/each}
+</section>
 
 <style>
     input{
