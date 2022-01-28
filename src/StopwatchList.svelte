@@ -108,6 +108,7 @@
 
 <style>
     :global(section){
+        width: 100%;
         display: grid;
         gap: 1rem;
         font-size: 3rem;
