@@ -54,11 +54,8 @@
 </script>
 
 <label>
-    <input type="text"
-           bind:value={input}
-           on:keyup={create}
-           placeholder="type title here"
-    >
+    <input type="text" bind:value={input}
+           on:keyup={create} placeholder="type title here">
     {#if message}
         <span>{message}</span>
     {/if}
