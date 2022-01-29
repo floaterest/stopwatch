@@ -56,10 +56,10 @@
 <label>
     <input type="text" bind:value={input}
            on:keyup={create} placeholder="type title here">
-    {#if message}
-        <span>{message}</span>
-    {/if}
 </label>
+{#if message}
+    <span>{message}</span>
+{/if}
 <section>
     {#each previews as stopwatch}
         <StopwatchItem {stopwatch} onClick={null}/>
