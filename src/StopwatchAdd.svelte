@@ -1,9 +1,12 @@
 <script lang="ts">
-    import { stopwatches } from './stores';
+    import StopwatchItem from './StopwatchItem.svelte';
+
     import type Stopwatch from './Stopwatch';
+    import { stopwatches } from './stores';
 
     let message = '';
     let input: string;
+    let previews: Stopwatch[] = [];
 
     function check(stopwatches: Stopwatch[], s: string){
         if(!s){
@@ -25,9 +28,16 @@
             return;
         }
 
+        previews = titles.map(t => ({
+            title: t,
+            timestamp: 0,
+            seconds: 0,
+            started: false,
+            time: stopwatches.time(0),
+        }));
+
         // no error
         message = 'will create ' + titles.toString();
-
         // create element on Enter
         if(e.key !== 'Enter') return;
         let toAdd = titles.map(t => ({
@@ -44,15 +54,17 @@
 </script>
 
 <label>
-    <input type="text"
-           bind:value={input}
-           on:keyup={create}
-           placeholder="type title here"
-    >
-    {#if message}
-        <span>{message}</span>
-    {/if}
+    <input type="text" bind:value={input}
+           on:keyup={create} placeholder="type title here">
 </label>
+{#if message}
+    <span>{message}</span>
+{/if}
+<section>
+    {#each previews as stopwatch}
+        <StopwatchItem {stopwatch} onClick={()=>{}}/>
+    {/each}
+</section>
 
 <style>
     input{
