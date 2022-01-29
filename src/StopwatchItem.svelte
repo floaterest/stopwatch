@@ -14,7 +14,7 @@
 </fieldset>
 
 <style lang="less">
-	:global(fieldset){
+	fieldset{
 		margin: 0;
 		padding: 0;
 		display: flex;
@@ -27,11 +27,11 @@
 		background-color: var(--background-darker);
 		border-style: solid;
 
-		:global(legend){
+		legend{
 			margin-left: 1rem;
 		}
 
-		:global(code){
+		code{
 			padding: 0 1.2rem;
 			width: 100%;
 			text-align: center;
@@ -41,7 +41,7 @@
 			}
 		}
 
-		:global(button){
+		button{
 			width: 100%;
 			background-color: var(--background-primary);
 			border: none;
@@ -52,5 +52,4 @@
 			cursor: pointer;
 		}
 	}
-
 </style>
