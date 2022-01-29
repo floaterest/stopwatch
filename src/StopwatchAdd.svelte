@@ -62,7 +62,7 @@
 {/if}
 <section>
     {#each previews as stopwatch}
-        <StopwatchItem {stopwatch} onClick={null}/>
+        <StopwatchItem {stopwatch} onClick={()=>{}}/>
     {/each}
 </section>
 
