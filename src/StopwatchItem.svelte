@@ -40,16 +40,16 @@
 				background-color: darkgreen;
 			}
 		}
-	}
 
-	button{
-		width: 100%;
-		background-color: var(--background-primary);
-		border: none;
-		color: unset;
-		text-transform: uppercase;
-		font-size: 1em;
-		padding: 0;
-		cursor: pointer;
+		button{
+			width: 100%;
+			background-color: var(--background-primary);
+			border: none;
+			color: unset;
+			text-transform: uppercase;
+			font-size: 1em;
+			padding: 0;
+			cursor: pointer;
+		}
 	}
 </style>
