@@ -14,6 +14,7 @@
             seconds: 0,
             started: false,
             time: stopwatches.time(0),
+            dead: false,
         })));
     }
     let interval: number;
