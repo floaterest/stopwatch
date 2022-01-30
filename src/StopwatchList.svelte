@@ -16,6 +16,7 @@
             time: stopwatches.time(0),
         })));
     }
+
     let interval: number;
     let counting = 0;
     let doubleClick: string;
