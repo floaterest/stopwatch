@@ -5,12 +5,16 @@
     export let onClick: (stopwatch: Stopwatch) => void;
 </script>
 
-<fieldset>
+<fieldset class:dead={stopwatch.dead}>
     <legend>{stopwatch.title}</legend>
     <code class:started={stopwatch.started}>{stopwatch.time}</code>
-    <button on:click={() => onClick(stopwatch)}>
-        {stopwatch.started ? 'pause' : 'start'}
-    </button>
+    {#if stopwatch.dead}
+        <button disabled>preview</button>
+    {:else}
+        <button on:click={() => onClick(stopwatch)}>
+            {stopwatch.started ? 'pause' : 'start'}
+        </button>
+    {/if}
 </fieldset>
 
 <style lang="less">
@@ -26,6 +30,10 @@
 		overflow: hidden;
 		background-color: var(--background-darker);
 		border-style: solid;
+
+		&.dead{
+			filter: brightness(50%);
+		}
 
 		legend{
 			margin-left: 1rem;
