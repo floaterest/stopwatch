@@ -1,16 +1,9 @@
 <script lang="ts">
     import StopwatchList from './StopwatchList.svelte';
-    import StopwatchAdd from './StopwatchAdd.svelte';
-
-    import { addStopwatch } from './stores';
 </script>
 
 <main>
-    {#if $addStopwatch}
-        <StopwatchAdd/>
-    {:else}
-        <StopwatchList/>
-    {/if}
+    <StopwatchList/>
 </main>
 
 <style>
