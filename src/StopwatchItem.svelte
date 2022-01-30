@@ -15,8 +15,6 @@
 
 <style lang="less">
 	fieldset{
-		margin: 0;
-		padding: 0;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -48,7 +46,6 @@
 			color: unset;
 			text-transform: uppercase;
 			font-size: 1em;
-			padding: 0;
 			cursor: pointer;
 		}
 	}
