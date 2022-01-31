@@ -9,10 +9,10 @@
     if(!$stopwatches.length){
         const titles = Array.from(Array(8), (_, i) => i).map(i => i.toString().padStart(3, '0'));
         stopwatches.set(titles.map(t => ({
+            started: false,
             title: t,
             timestamp: new Date().getTime(),
             seconds: 0,
-            started: false,
             time: stopwatches.time(0),
             dead: false,
         })));
