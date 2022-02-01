@@ -16,4 +16,8 @@ export default interface Stopwatch{
      * time displayed in the ui
      */
     time: string
+    /**
+     * indicates whether the stopwatch is preview only
+     */
+    dead: boolean
 }
