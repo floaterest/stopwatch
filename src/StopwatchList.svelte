@@ -117,12 +117,34 @@
     {/each}
 </section>
 
-<style>
-    section{
-        width: 100%;
-        display: grid;
-        gap: 1rem;
-        font-size: 3rem;
-        grid-template-columns:repeat(auto-fill, minmax(270px, 1fr));
-    }
+<style lang="less">
+	form{
+		width: 100%;
+		display: flex;
+		justify-content: space-evenly;
+		border-radius: 1rem;
+		border: 1px solid white;
+
+		input{
+			margin: 0 10px;
+			outline: none;
+			background: none;
+			border: none;
+			font-size: 1rem;
+			width: 100%;
+
+			&::placeholder{
+				color: var(--text-color);
+			}
+		}
+	}
+
+
+	section{
+		width: 100%;
+		display: grid;
+		gap: 1rem;
+		font-size: 3rem;
+		grid-template-columns:repeat(auto-fill, minmax(270px, 1fr));
+	}
 </style>
