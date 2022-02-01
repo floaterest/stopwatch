@@ -18,9 +18,13 @@
         })));
     }
 
+    // id for setInterval
     let interval: number;
-    let counting = 0;
+    // number of active stopwatches
+    let active = 0;
+    // title of the stopwatch that is being double clicked
     let doubleClick: string;
+    // current timestamp
     let now: number;
 
     /**
@@ -63,14 +67,14 @@
             console.debug('cleared interval after double click');
             clearInterval(interval);
             interval = null;
-            counting = 0;
+            active = 0;
 
             return;
         }
 
         sw.started = !sw.started;
         if(sw.started){
-            counting++;
+            active++;
             // update timestamp
             sw.timestamp = now;
             // set the interval if not set yet
@@ -79,11 +83,11 @@
                 interval = setInterval(update, 1000) as number;
             }
         }else{
-            counting--;
+            active--;
             // update seconds
             sw.seconds += delta(sw.timestamp);
             // clear interval if all stopwatches are stopped
-            if(!counting){
+            if(!active){
                 console.debug('cleared interval');
                 clearInterval(interval);
                 interval = null;
