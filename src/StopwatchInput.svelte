@@ -25,14 +25,7 @@
 		input{
 			margin: 0 10px;
 			outline: none;
-			background: none;
-			border: none;
-			font-size: 1rem;
 			width: 100%;
-
-			&::placeholder{
-				color: var(--text-color);
-			}
 		}
 	}
 </style>
