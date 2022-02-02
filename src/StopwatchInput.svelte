@@ -15,17 +15,33 @@
 </form>
 
 <style lang="less">
+	@padding: 1rem;
+	@size: 2rem;
 	form{
 		width: 100%;
 		display: flex;
-		justify-content: space-evenly;
-		border-radius: 1rem;
+		border-radius: calc(@size + @padding);
 		border: 1px solid white;
 
+		input, button{
+			padding: @padding 0;
+		}
+
 		input{
-			margin: 0 10px;
+			font-size: @size;
 			outline: none;
 			width: 100%;
+			margin-left: @size;
+		}
+
+		button{
+			width: @size;
+			margin-right: @size;
+
+			svg{
+				width: 100%;
+				height: 100%;
+			}
 		}
 	}
 </style>
