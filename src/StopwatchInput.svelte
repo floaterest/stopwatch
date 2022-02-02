@@ -23,11 +23,8 @@
 		border-radius: calc(@size + @padding);
 		border: 1px solid white;
 
-		input, button{
-			padding: @padding 0;
-		}
-
 		input{
+			padding: @padding 0;
 			font-size: @size;
 			outline: none;
 			width: 100%;
@@ -35,7 +32,7 @@
 		}
 
 		button{
-			width: @size;
+			width: calc(@size + 0.5rem);
 			margin-right: @size;
 
 			svg{
