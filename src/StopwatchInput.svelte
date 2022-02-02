@@ -2,10 +2,28 @@
     import type Stopwatch from './Stopwatch';
 
     import { stopwatches } from './stores';
+
+    let input: string = '';
+
+    function onSubmit(){
+        let titles = input.split(' ');
+
+        stopwatches.update(sws => [
+            ...sws, ...titles.map(t => ({
+                started: false,
+                title: t,
+                timestamp: 0,
+                seconds: 0,
+                time: stopwatches.time(0),
+                dead: false,
+            } as Stopwatch)),
+        ]);
+        input = '';
+    }
 </script>
-<form>
+<form on:submit|preventDefault={onSubmit}>
     <label for="add"></label>
-    <input id="add" type="text" placeholder="type title here">
+    <input id="add" type="text" bind:value={input} placeholder="type title here">
     <button>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
              class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
