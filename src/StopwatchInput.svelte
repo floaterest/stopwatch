@@ -16,24 +16,26 @@
 
 <style lang="less">
 	@padding: 1rem;
-	@size: 2rem;
+	@size: 1rem;
+	@radius: calc(@size / 2 + @padding);
 	form{
 		width: 100%;
 		display: flex;
-		border-radius: calc(@size + @padding);
+		border-radius: @radius;
 		border: 1px solid white;
 
 		input{
 			padding: @padding 0;
-			font-size: @size;
+			height: @size;
 			outline: none;
 			width: 100%;
-			margin-left: @size;
+			margin-left: @radius;
 		}
 
 		button{
-			width: calc(@size + 0.5rem);
-			margin-right: @size;
+			@width: calc(@size + 0.5rem);
+			width: @width;
+			margin-right: calc(@radius - @width / 2);
 
 			svg{
 				width: 100%;
