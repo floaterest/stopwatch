@@ -4,10 +4,22 @@
     import { stopwatches } from './stores';
 
     let input: string = '';
+    let message: string = '';
+    $: titles = input.split(' ');
+
+    function check(){
+        for(const title of titles){
+            if(!title){
+                return 'Title cannot be empty string or ending with space!';
+            }
+            // no duplicate
+            if($stopwatches.some(sw => sw.title === title)){
+                return title + ' already exists!';
+            }
+        }
+    }
 
     function onSubmit(){
-        let titles = input.split(' ');
-
         stopwatches.update(sws => [
             ...sws, ...titles.map(t => ({
                 started: false,
@@ -23,7 +35,8 @@
 </script>
 <form on:submit|preventDefault={onSubmit}>
     <label for="add"></label>
-    <input id="add" type="text" bind:value={input} placeholder="type title here">
+    <input id="add" type="text" placeholder="type title here"
+           bind:value={input} on:keyup={()=>message=check()}>
     <button>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
              class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
@@ -31,6 +44,9 @@
         </svg>
     </button>
 </form>
+{#if message}
+    <span>{message}</span>
+{/if}
 
 <style lang="less">
 	@padding: 1rem;
