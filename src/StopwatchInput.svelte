@@ -72,15 +72,25 @@
 			margin-left: @radius;
 		}
 
-		button{
-			@width: calc(@size + 0.5rem);
-			width: @width;
-			margin-right: calc(@radius - @width / 2);
+	}
 
-			svg{
-				width: 100%;
-				height: 100%;
-			}
+	button{
+		@width: calc(@size + 0.5rem);
+		width: @width;
+		margin-right: calc(@radius - @width / 2);
+
+
+		&:disabled{
+			color: red;
+		}
+
+		&:not(:disabled){
+			color: var(--accent);
+		}
+
+		svg{
+			width: 100%;
+			height: 100%;
 		}
 	}
 </style>
