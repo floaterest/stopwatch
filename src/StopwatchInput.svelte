@@ -5,18 +5,23 @@
 
     let input: string = '';
     let message: string = '';
+    let disabled = true;
     $: titles = input.split(' ');
 
     function check(){
         for(const title of titles){
             if(!title){
-                return 'Title cannot be empty string or ending with space!';
+                message = 'Title cannot be empty string or ending with space!';
+                return true;
             }
             // no duplicate
             if($stopwatches.some(sw => sw.title === title)){
-                return title + ' already exists!';
+                message = title + ' already exists!';
+                return true;
             }
         }
+        message = '';
+        return false;
     }
 
     function onSubmit(){
@@ -36,8 +41,8 @@
 <form on:submit|preventDefault={onSubmit}>
     <label for="add"></label>
     <input id="add" type="text" placeholder="type title here"
-           bind:value={input} on:keyup={()=>message=check()}>
-    <button>
+           bind:value={input} on:keyup={()=>disabled=check()}>
+    <button {disabled}>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
              class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
