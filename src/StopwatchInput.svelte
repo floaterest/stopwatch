@@ -79,13 +79,13 @@
 		width: @width;
 		margin-right: calc(@radius - @width / 2);
 
-
 		&:disabled{
 			color: red;
 		}
 
 		&:not(:disabled){
 			color: var(--accent);
+			cursor: pointer;
 		}
 
 		svg{
