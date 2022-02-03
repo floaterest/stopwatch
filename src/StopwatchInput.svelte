@@ -3,24 +3,24 @@
 
     import { stopwatches } from './stores';
 
-    let input: string = '';
-    let message: string = '';
+    let input = '';
+    let error = '';
     let disabled = true;
     $: titles = input.split(' ');
 
     function check(){
         for(const title of titles){
             if(!title){
-                message = 'Title cannot be empty string or ending with space!';
+                error = 'Title cannot be empty string or ending with space!';
                 return true;
             }
             // no duplicate
             if($stopwatches.some(sw => sw.title === title)){
-                message = title + ' already exists!';
+                error = title + ' already exists!';
                 return true;
             }
         }
-        message = '';
+        error = '';
         return false;
     }
 
@@ -38,6 +38,7 @@
         input = '';
     }
 </script>
+
 <form on:submit|preventDefault={onSubmit}>
     <label for="add"></label>
     <input id="add" type="text" placeholder="type title here"
@@ -49,8 +50,8 @@
         </svg>
     </button>
 </form>
-{#if message}
-    <span>{message}</span>
+{#if error}
+    <span>{error}</span>
 {/if}
 
 <style lang="less">
