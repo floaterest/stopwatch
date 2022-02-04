@@ -19,13 +19,15 @@
 
 <style lang="less">
 	fieldset{
-        user-select: none;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+
 		height: 100%;
 		width: 100%;
+
+		user-select: none;
 		overflow: hidden;
 		background-color: var(--background-darker);
 		border-style: solid;
