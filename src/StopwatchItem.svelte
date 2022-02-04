@@ -53,6 +53,5 @@
 		width: 100%;
 		background-color: var(--background-primary);
 		text-transform: uppercase;
-		cursor: pointer;
 	}
 </style>

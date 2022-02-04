@@ -96,7 +96,6 @@
 
 		&:not(:disabled){
 			color: var(--accent);
-			cursor: pointer;
 		}
 
 		svg{
