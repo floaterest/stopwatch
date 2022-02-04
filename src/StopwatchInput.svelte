@@ -15,18 +15,29 @@
                 return true;
             }
             // no duplicate
-            if($stopwatches.some(sw => sw.title === title)){
+            if($stopwatches.filter(sw => !sw.dead).some(sw => sw.title === title)){
                 error = title + ' already exists!';
                 return true;
             }
         }
+        // add preview
+        stopwatches.update(sws => [
+            ...sws.filter(sw => !sw.dead), ...titles.map(t => ({
+                started: false,
+                title: t,
+                timestamp: 0,
+                seconds: 0,
+                time: stopwatches.time(0),
+                dead: true,
+            } as Stopwatch)),
+        ]);
         error = '';
         return false;
     }
 
     function onSubmit(){
         stopwatches.update(sws => [
-            ...sws, ...titles.map(t => ({
+            ...sws.filter(sw => !sw.dead), ...titles.map(t => ({
                 started: false,
                 title: t,
                 timestamp: 0,
