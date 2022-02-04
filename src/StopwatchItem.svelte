@@ -19,6 +19,7 @@
 
 <style lang="less">
 	fieldset{
+        user-select: none;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
