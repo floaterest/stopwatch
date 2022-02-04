@@ -47,14 +47,12 @@
 			}
 		}
 
-		button{
-			width: 100%;
-			background-color: var(--background-primary);
-			border: none;
-			color: unset;
-			text-transform: uppercase;
-			font-size: 1em;
-			cursor: pointer;
-		}
+	}
+
+	button{
+		width: 100%;
+		background-color: var(--background-primary);
+		text-transform: uppercase;
+		cursor: pointer;
 	}
 </style>
