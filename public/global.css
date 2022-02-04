@@ -59,6 +59,10 @@ code{
     font-family: var(--font-code);
 }
 
+button:not(:disabled){
+    cursor: pointer;
+}
+
 button, input{
     border: none;
     background-color: inherit;
