@@ -16,6 +16,20 @@ function time(seconds: number): string{
     return h + ':' + m + ':' + s;
 }
 
+/**
+ * create an empty stopwatch
+ */
+function create(title: string, dead: boolean = false): Stopwatch{
+    return {
+        started: false,
+        title: title,
+        timestamp: 0,
+        seconds: 0,
+        time: time(0),
+        dead: dead,
+    };
+}
+
 export const stopwatches = (() => {
     const { subscribe, update, set } = writable<Stopwatch[]>([]);
     return {
@@ -23,5 +37,6 @@ export const stopwatches = (() => {
         update,
         set,
         time: time,
+        create: create,
     };
 })() as Writable<Stopwatch[]> & { time: (seconds: number) => string };
