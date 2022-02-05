@@ -16,15 +16,6 @@ function time(seconds: number): string{
     return h + ':' + m + ':' + s;
 }
 
-export const addStopwatch = (() => {
-    const { subscribe, update } = writable(false);
-
-    return {
-        subscribe,
-        toggle: () => update(add => !add),
-    };
-})() as Writable<boolean> & { toggle: () => void };
-
 export const stopwatches = (() => {
     const { subscribe, update, set } = writable<Stopwatch[]>([]);
     return {
