@@ -37,14 +37,8 @@
 
     function onSubmit(){
         stopwatches.update(sws => [
-            ...sws.filter(sw => !sw.dead), ...titles.map(t => ({
-                started: false,
-                title: t,
-                timestamp: 0,
-                seconds: 0,
-                time: stopwatches.time(0),
-                dead: false,
-            } as Stopwatch)),
+            ...sws.filter(sw => !sw.dead),
+            ...titles.map(t => stopwatches.create(t)),
         ]);
         input = '';
     }
