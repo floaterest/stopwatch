@@ -39,4 +39,7 @@ export const stopwatches = (() => {
         time: time,
         create: create,
     };
-})() as Writable<Stopwatch[]> & { time: (seconds: number) => string };
+})() as Writable<Stopwatch[]> & {
+    time: (seconds: number) => string,
+    create: (title: string) => Stopwatch,
+};
