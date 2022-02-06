@@ -21,6 +21,7 @@
             ...sws.filter(sw => !sw.dead),
             ...titles.map(t => stopwatches.create(t, true)),
         ]);
+        return '';
     }
 
     function onSubmit(){
@@ -43,9 +44,7 @@
         </svg>
     </button>
 </form>
-{#if error}
-    <span>{error}</span>
-{/if}
+<span>{error}</span>
 
 <style lang="less">
 	@padding: 1rem;
@@ -85,5 +84,9 @@
 			width: 100%;
 			height: 100%;
 		}
+	}
+
+	span{
+		white-space: pre-wrap;
 	}
 </style>
