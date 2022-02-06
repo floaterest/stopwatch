@@ -1,12 +1,13 @@
 <script lang="ts">
     import { stopwatches } from './stores';
 
-    let input = '';
+    export let input = '';
+    let titles = input.split(' ');
     // zwsp, it's truthy but it looks empty
-    let error = '\u200b';
-    $: titles = input.split(' ');
+    let error = input ? check() : '\u200b';
 
     function check(){
+        titles = input.split(' ');
         for(const title of titles){
             if(!title){
                 return 'Title cannot be empty string or ending with space!';
@@ -29,6 +30,7 @@
             ...sws.filter(sw => !sw.dead),
             ...titles.map(t => stopwatches.create(t)),
         ]);
+        localStorage.setItem('input', input);
         input = '';
     }
 </script>

@@ -6,8 +6,11 @@
 
     import { stopwatches } from './stores';
 
-    // create sample stopwatches
-    if(!$stopwatches.length){
+    // if has local storage
+    let input = localStorage.getItem('input') ?? '';
+    if(input){
+        console.debug('found"', input, '"from localStorage');
+    }else{
         const titles = Array.from(Array(8), (_, i) => i).map(i => i.toString().padStart(3, '0'));
         stopwatches.set(titles.map(t => stopwatches.create(t)));
     }
@@ -100,7 +103,7 @@
     }
 </script>
 
-<StopwatchInput/>
+<StopwatchInput {input}/>
 <section>
     {#each $stopwatches as stopwatch}
         <StopwatchItem {stopwatch} {onClick}/>
