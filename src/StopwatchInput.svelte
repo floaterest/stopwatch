@@ -1,6 +1,4 @@
 <script lang="ts">
-    import type Stopwatch from './Stopwatch';
-
     import { stopwatches } from './stores';
 
     let input = '';
@@ -22,14 +20,8 @@
         }
         // add preview
         stopwatches.update(sws => [
-            ...sws.filter(sw => !sw.dead), ...titles.map(t => ({
-                started: false,
-                title: t,
-                timestamp: 0,
-                seconds: 0,
-                time: stopwatches.time(0),
-                dead: true,
-            } as Stopwatch)),
+            ...sws.filter(sw => !sw.dead),
+            ...titles.map(t => stopwatches.create(t, true)),
         ]);
         error = '';
         return false;
