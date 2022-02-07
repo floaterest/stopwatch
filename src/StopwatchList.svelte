@@ -7,12 +7,12 @@
 
     // if has local storage
     let input = localStorage.getItem('input') ?? '';
-    // if(input){
-    //     console.debug('found"', input, '"from localStorage');
-    // }else{
-    const titles = Array.from(Array(8), (_, i) => i).map(i => i.toString().padStart(3, '0'));
-    stopwatches.set(titles.reduce((obj, title) => ({ ...obj, [title]: create() }), {}));
-    // }
+    if(input){
+        console.debug('found"', input, '"from localStorage');
+    }else{
+        const titles = Array.from(Array(8), (_, i) => i).map(i => i.toString().padStart(3, '0'));
+        stopwatches.set(titles.reduce((obj, title) => ({ ...obj, [title]: create() }), {}));
+    }
 
     // id for setInterval
     let interval: number;
@@ -100,7 +100,6 @@
 
         // update the clicked stopwatch
         stopwatches.update(sws => ({ ...sws, [title]: sw }));
-        console.log($stopwatches)
     }
 </script>
 
