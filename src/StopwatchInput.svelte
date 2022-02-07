@@ -1,5 +1,7 @@
 <script lang="ts">
     import { stopwatches } from './stores';
+    import type { Stopwatch } from './Stopwatch';
+    import { create } from './utils';
 
     export let input = '';
     let titles = input.split(' ');
@@ -13,23 +15,24 @@
                 return 'Title cannot be empty string or ending with space!';
             }
             // no duplicate
-            if($stopwatches.filter(sw => !sw.dead).some(sw => sw.title === title)){
+            if(title in $stopwatches && !$stopwatches[title].dead){
                 return title + ' already exists!';
             }
         }
+
         // add preview
         stopwatches.update(sws => [
-            ...sws.filter(sw => !sw.dead),
-            ...titles.map(t => stopwatches.create(t, true)),
-        ]);
+            ...Object.entries(sws).filter(([ _, sw ]) => !(sw as Stopwatch).dead),
+            ...titles.map(t => [ t, create(true) ]),
+        ].reduce((obj, [ key, sw ]) => ({ ...obj, [key]: sw }), {}));
         return '';
     }
 
     function onSubmit(){
         stopwatches.update(sws => [
-            ...sws.filter(sw => !sw.dead),
-            ...titles.map(t => stopwatches.create(t)),
-        ]);
+            ...Object.entries(sws).filter(([ _, sw ]) => !(sw as Stopwatch).dead),
+            ...titles.map(t => [ t, create() ]),
+        ].reduce((obj, [ key, sw ]) => ({ ...obj, [key]: sw }), {}));
         localStorage.setItem('input', input);
         input = '';
     }
