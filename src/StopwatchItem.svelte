@@ -1,17 +1,19 @@
 <script lang="ts">
-    import type Stopwatch from './Stopwatch';
+    import { time } from './utils';
+    import type { Stopwatch } from './Stopwatch';
 
+    export let title: string;
     export let stopwatch: Stopwatch;
-    export let onClick: (stopwatch: Stopwatch) => void;
+    export let onClick: (title: string) => void;
 </script>
 
 <fieldset class:dead={stopwatch.dead}>
-    <legend>{stopwatch.title}</legend>
-    <code class:started={stopwatch.started}>{stopwatch.time}</code>
+    <legend>{title}</legend>
+    <code class:started={stopwatch.started}>{time(stopwatch.total)}</code>
     {#if stopwatch.dead}
         <button disabled>preview</button>
     {:else}
-        <button on:click={() => onClick(stopwatch)}>
+        <button on:click={() => onClick(title)}>
             {stopwatch.started ? 'pause' : 'start'}
         </button>
     {/if}
