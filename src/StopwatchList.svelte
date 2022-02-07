@@ -2,18 +2,17 @@
     import StopwatchInput from './StopwatchInput.svelte';
     import StopwatchItem from './StopwatchItem.svelte';
 
-    import type Stopwatch from './Stopwatch';
-
     import { stopwatches } from './stores';
+    import { create } from './utils';
 
     // if has local storage
     let input = localStorage.getItem('input') ?? '';
-    if(input){
-        console.debug('found"', input, '"from localStorage');
-    }else{
-        const titles = Array.from(Array(8), (_, i) => i).map(i => i.toString().padStart(3, '0'));
-        stopwatches.set(titles.map(t => stopwatches.create(t)));
-    }
+    // if(input){
+    //     console.debug('found"', input, '"from localStorage');
+    // }else{
+    const titles = Array.from(Array(8), (_, i) => i).map(i => i.toString().padStart(3, '0'));
+    stopwatches.set(titles.reduce((obj, title) => ({ ...obj, [title]: create() }), {}));
+    // }
 
     // id for setInterval
     let interval: number;
@@ -37,29 +36,29 @@
      */
     function update(){
         now = new Date().getTime();
-        stopwatches.update(sws => sws.map(sw => {
+        stopwatches.update(sws => Object.entries(sws).reduce((obj, [ key, sw ]) => {
             if(sw.started){
-                sw.time = stopwatches.time(sw.seconds + delta(sw.timestamp));
+                sw.total = sw.before + delta(sw.timestamp);
             }
-            return sw;
-        }));
+            return { ...obj, [key]: sw };
+        }, {}));
     }
 
     /**
      * toggle clicked stopwatch and set/clear interval if needed
      */
-    function onClick(sw: Stopwatch){
+    function onClick(title: string){
         now = new Date().getTime();
         // if this click is the second click from a double click
-        if(doubleClick == sw.title){
+        if(doubleClick == title){
             // pause all stopwatches
-            stopwatches.update(sws => sws.map(sw => {
+            stopwatches.update(sws => Object.entries(sws).reduce((obj, [ key, sw ]) => {
                 if(sw.started){
                     sw.started = false;
-                    sw.seconds += delta(sw.timestamp);
+                    sw.before += delta(sw.timestamp);
                 }
-                return sw;
-            }));
+                return { ...obj, [key]: sw };
+            }, {}));
             // reset to 0 counting stopwatches and clear interval
             console.debug('cleared interval after double click');
             clearInterval(interval);
@@ -69,6 +68,7 @@
             return;
         }
 
+        const sw = { ...$stopwatches[title] };
         sw.started = !sw.started;
         if(sw.started){
             active++;
@@ -82,7 +82,7 @@
         }else{
             active--;
             // update seconds
-            sw.seconds += delta(sw.timestamp);
+            sw.before += delta(sw.timestamp);
             // clear interval if all stopwatches are stopped
             if(!active){
                 console.debug('cleared interval');
@@ -95,18 +95,19 @@
          * according to Windows, the default timing of a double click is 500ms
          * source: https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setdoubleclicktime
          */
-        doubleClick = sw.title;
+        doubleClick = title;
         setTimeout(() => doubleClick = null, 500);
 
         // update the clicked stopwatch
-        stopwatches.update(sws => sws.map(sw => sw.title === sw.title ? sw : sw));
+        stopwatches.update(sws => ({ ...sws, [title]: sw }));
+        console.log($stopwatches)
     }
 </script>
 
 <StopwatchInput {input}/>
 <section>
-    {#each $stopwatches as stopwatch}
-        <StopwatchItem {stopwatch} {onClick}/>
+    {#each Object.entries($stopwatches) as [title, stopwatch]}
+        <StopwatchItem {title} {stopwatch} {onClick}/>
     {/each}
 </section>
 
