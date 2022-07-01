@@ -34,6 +34,7 @@
 <style lang="sass">
     @import '../global'
     input
+        box-sizing: border-box
         border-radius: 3em
         border: 1px solid $white
         background: unset
