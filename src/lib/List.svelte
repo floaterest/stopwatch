@@ -6,7 +6,7 @@
 	let active = Object.keys($stopwatches)[0];
 
 	function hhmmss(seconds: number){
-		return [seconds / 3600 | 0, seconds / 60 | 0 % 60, seconds % 60].map(
+		return [seconds / 3600 | 0, (seconds / 60 | 0) % 60, seconds % 60].map(
 			n => n.toString().padStart(2, '0')
 		).join(':');
 	}

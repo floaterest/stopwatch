@@ -1,13 +1,15 @@
 import { derived, readable, writable } from 'svelte/store';
 import type { Stopwatch } from './Stopwatch';
 
+const time = () => new Date().getTime() / 1000 | 0;
+
 // current time in seconds
-export const now = readable<number>(new Date().getTime() / 1000 | 0, set => {
-	const interval = setInterval(() => set(new Date().getTime() / 1000 | 0), 1000);
+export const now = readable<number>(time(), set => {
+	const interval = setInterval(() => set(time()), 1000);
 	return () => clearInterval(interval);
 });
 
-const timestamp = new Date().getTime() / 1000 | 0;
+const timestamp = time();
 const started = false;
 const duration = 0;
 // stopwatch title -> stopwatch
