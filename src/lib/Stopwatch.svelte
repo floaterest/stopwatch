@@ -20,16 +20,23 @@
 		stopwatch.duration = $times[title];
 	}
 
+	function reset(){
+		stopwatch.duration = 0;
+		stopwatch.timestamp = $now;
+    }
+
 	$: started = stopwatch.started;
+	$: display = hhmmss($times[title])
 </script>
 
 <fieldset class:started>
     <legend>{title}</legend>
-    <code>{hhmmss($times[title])}</code>
+    <code>{display}</code>
     <section>
         <button on:click={started?off:on} class="material-icons">
             {#if started}&#xe034;{:else}&#xe037;{/if}
         </button>
+        <button on:click={reset} class="material-icons">&#xe5d5;</button>
         <button on:click={remove} class="material-icons">&#xe872;</button>
     </section>
 </fieldset>
