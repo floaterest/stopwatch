@@ -2,7 +2,7 @@ export interface Stopwatch{
 	started: boolean;
 	/// when stopwatch is paused
 	timestamp: number;
-	/// duration when stopwatch is pased
+	// stored duration when stopwatch is paused
 	duration: number;
 }
 
