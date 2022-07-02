@@ -1,30 +1,9 @@
 <script lang="ts">
 	import Stopwatch from './Stopwatch.svelte';
-	import type { Stopwatch as SW } from './Stopwatch.ts';
-	import { stopwatches, times, now } from './stores';
+	import { stopwatches, times } from './stores';
+	import { hhmmss } from './Stopwatch.ts';
 
 	let active = Object.keys($stopwatches)[0];
-
-	function hhmmss(seconds: number){
-		return [seconds / 3600 | 0, (seconds / 60 | 0) % 60, seconds % 60].map(
-			n => n.toString().padStart(2, '0')
-		).join(':');
-	}
-
-	const off = (title: string) => () => $stopwatches[title] = {
-		...$stopwatches[title],
-		duration: $times[title],
-		started: false,
-	} as SW;
-
-	const on = (title: string) => () => {
-		active = title;
-		$stopwatches[title] = {
-			...$stopwatches[title],
-			timestamp: $now,
-			started: true,
-		} as SW;
-	};
 
 	const remove = (title: string) => () => stopwatches.update(
 		sws => Object.entries(sws).filter(([k, _]) => k != title).reduce(
@@ -42,9 +21,7 @@
 
 <section>
     {#each Object.entries($stopwatches) as [title, stopwatch]}
-        <Stopwatch {title} toggle="{(stopwatch.started?off:on)(title)}"
-                   {stopwatch} remove="{remove(title)}"
-                   display="{hhmmss($times[title])}"/>
+        <Stopwatch {title} bind:stopwatch bind:active remove="{remove(title)}"/>
     {/each}
 </section>
 
