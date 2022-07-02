@@ -1,25 +1,36 @@
 <script lang="ts">
 	import type { Stopwatch } from './Stopwatch.ts';
+	import { now, times } from './stores';
+	import { hhmmss } from './Stopwatch.ts';
 
 	export let title: string;
 	export let stopwatch: Stopwatch;
-	export let display: string;
-	export let toggle: () => void;
+	export let active: string;
 	export let remove: () => void;
 
-	$:started = stopwatch.started;
+
+	function on(){
+		stopwatch.started = true;
+		stopwatch.timestamp = $now;
+		active = title;
+	}
+
+	function off(){
+		stopwatch.started = false;
+		stopwatch.duration = $times[title];
+	}
+
+	$: started = stopwatch.started;
 </script>
 
 <fieldset class:started>
     <legend>{title}</legend>
-    <code>{display}</code>
+    <code>{hhmmss($times[title])}</code>
     <section>
-        <button on:click="{toggle}" class="material-icons">
+        <button on:click={started?off:on} class="material-icons">
             {#if started}&#xe034;{:else}&#xe037;{/if}
         </button>
-        <button on:click="{remove}" class="material-icons">
-            &#xe872;
-        </button>
+        <button on:click={remove} class="material-icons">&#xe872;</button>
     </section>
 </fieldset>
 
