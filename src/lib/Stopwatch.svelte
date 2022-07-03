@@ -23,15 +23,16 @@
 	function reset(){
 		stopwatch.duration = 0;
 		stopwatch.timestamp = $now;
-    }
+	}
 
 	$: started = stopwatch.started;
-	$: display = hhmmss($times[title])
+	$: innerHTML = hhmmss($times[title]);
 </script>
 
-<fieldset class:started>
+<fieldset>
     <legend>{title}</legend>
-    <code>{display}</code>
+    <!--     <code class:started contenteditable="true" bind:innerHTML></code> -->
+    <code class:started>{innerHTML}</code>
     <section>
         <button on:click={started?off:on} class="material-icons">
             {#if started}&#xe034;{:else}&#xe037;{/if}
@@ -50,13 +51,14 @@
         align-items: center
         user-select: none
         padding: 0
-        &.started code
-            background: darkgreen
     legend
         margin-left: 1em
     code
         width: 100%
         text-align: center
+        font-family: $mono
+        &.started
+            background: darkgreen
     section
         display: flex
         justify-content: center
