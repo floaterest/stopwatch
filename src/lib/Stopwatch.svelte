@@ -35,10 +35,10 @@
     <code class:started>{innerHTML}</code>
     <section>
         <button on:click={started?off:on} class="material-icons">
-            {#if started}&#xe034;{:else}&#xe037;{/if}
+            {#if started}pause{:else}play_arrow{/if}
         </button>
-        <button on:click={reset} class="material-icons">&#xe5d5;</button>
-        <button on:click={remove} class="material-icons">&#xe872;</button>
+        <button on:click={reset} class="material-icons">refresh</button>
+        <button on:click={remove} class="material-icons">delete</button>
     </section>
 </fieldset>
 
@@ -69,7 +69,6 @@
         width: 50%
         background: $darkest
         color: unset
-        text-transform: uppercase
         border: none
         display: flex
         justify-content: center
