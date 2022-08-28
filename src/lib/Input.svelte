@@ -32,7 +32,7 @@
 <span>{error}</span>
 
 <style lang="sass">
-    @import '../global'
+    @import '../app'
     input
         box-sizing: border-box
         border-radius: 3em

@@ -43,7 +43,7 @@
 </fieldset>
 
 <style lang="sass">
-    @import '../global'
+    @import '../app'
     fieldset
         display: flex
         flex-direction: column
