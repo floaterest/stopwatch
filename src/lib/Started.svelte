@@ -5,4 +5,4 @@
     export let stopwatch: Stopwatch;
 </script>
 
-<Stopwatch {...$$props} display="{$now}"/>
+<Stopwatch {...$$props} now="{$now}"/>

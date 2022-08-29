@@ -1,13 +1,15 @@
 <script lang="ts">
     import type { Stopwatch } from './State';
     import { state } from './stores';
+    import { hhmmss } from './helpers';
 
     export let stopwatch: Stopwatch;
-    export let display: string = '00:00:00';
+    export let now: number = stopwatch.timestamp;
     export let name: string;
     export let on: () => void;
     export let off: () => void;
     const start = $state.started.has(name);
+    $: display = hhmmss(stopwatch, $state.increment, now);
 
     function edit(){
         console.log(name, 'edit');
