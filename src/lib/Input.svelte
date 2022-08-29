@@ -1,39 +1,40 @@
 <script lang="ts">
-	import { now, stopwatches } from './stores';
-	import type { Stopwatch } from './Stopwatch.ts';
+    import { state } from './stores';
+    import { now } from './helpers';
+    import type { Stopwatch } from './State';
 
-	let input = '';
-	let error = '';
+    let value = '';
+    $: names = value.trim().split(' ');
+    $: error = names.find(name => $state.stopwatches[name]) || '';
 
-	function check(){
-		return error = (() => {
-			for(const t of input.split(' ')){
-				if(!t) return 'Title cannot be empty string or end with space';
-				if(t in $stopwatches) return t + ' already exists';
-			}
-			return '';
-		})();
-	}
+    const input = {
+        type: 'text',
+        placeholder: 'Type titles here...'
+    };
 
-	function submit(){
-		if(check()) return;
-		const started = false;
-		const timestamp = $now;
-		const duration = 0;
-		for(const t of input.split(' ')){
-			$stopwatches[t] = { started, timestamp, duration } as Stopwatch;
-		}
-		input = '';
-	}
+    function submit({ keyCode }){
+        if(keyCode !== 13) return;
+        /// push new stopwatches
+        const stopwatch: Stopwatch = {
+            started: false,
+            timestamp: now(),
+            duration: 0,
+        };
+        $state.stopwatches = Object.assign($state.stopwatches, ...names.map(
+            name => ({ [name]: { ...stopwatch } })
+        ));
+        value = '';
+    }
+
 </script>
 
-<input type="text" placeholder="type titles here" class:error
-       bind:value={input} on:keyup={e=>(e.keyCode===13?submit:check)()}>
-<span>{error}</span>
+<input {...input} bind:value class:error on:keyup={submit}>
+<span>{error && `${error} already exists!`}</span>
 
 <style lang="sass">
     @use '../app' as *
     input
+        font-size: unset
         box-sizing: border-box
         border-radius: 3em
         border: 1px solid $white
@@ -42,6 +43,4 @@
         width: 100%
         padding: 1em
         height: 1em
-        &.error
-            border-color: $pink
 </style>
