@@ -1,6 +1,6 @@
 <script lang="ts">
     import Input from './lib/Input.svelte';
-    import { started, state } from './lib/stores';
+    import { state } from './lib/stores';
     import type { State } from './lib/State';
     import Started from './lib/Started.svelte';
     import Stopwatch from './lib/Stopwatch.svelte';
@@ -9,17 +9,19 @@
         /// save state to localStorage
         // todo save display time
         console.log('save', state);
-        localStorage.setItem(state.key, JSON.stringify(state));
-        return state;
+        const { increment, stopwatches } = state;
+        localStorage.setItem(state.key, JSON.stringify({
+            increment, stopwatches
+        }));
     }
 
-    const on = (name: string) => () => $started = $started.add(name);
+    const on = (name: string) => () => $state.started = $state.started.add(name);
     const off = (name: string) => () => {
-        $started.delete(name);
-        console.log($started);
-        $started = $started;
+        $state.started.delete(name);
+        $state.started = $state.started;
     };
 
+    $: save($state);
     $: stopwatches = Object.entries($state.stopwatches).map(
         ([name, stopwatch]) => ({
             name,
@@ -33,7 +35,7 @@
 <Input/>
 <section>
     {#each stopwatches as { name, props }}
-        {#if $started.has(name)}
+        {#if $state.started.has(name)}
             <Started {...props}/>
         {:else}
             <Stopwatch {...props}/>

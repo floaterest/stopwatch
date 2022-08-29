@@ -1,13 +1,13 @@
 <script lang="ts">
     import type { Stopwatch } from './State';
-    import { started, state } from './stores';
+    import { state } from './stores';
 
     export let stopwatch: Stopwatch;
     export let display: string = '00:00:00';
     export let name: string;
     export let on: () => void;
     export let off: () => void;
-    const start = $started.has(name);
+    const start = $state.started.has(name);
 
     function edit(){
         console.log(name, 'edit');

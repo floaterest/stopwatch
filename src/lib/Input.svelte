@@ -15,11 +15,7 @@
     function submit({ keyCode }){
         if(keyCode !== 13) return;
         /// push new stopwatches
-        const stopwatch: Stopwatch = {
-            started: false,
-            timestamp: now(),
-            duration: 0,
-        };
+        const stopwatch: Stopwatch = { timestamp: now(), duration: 0 };
         $state.stopwatches = Object.assign($state.stopwatches, ...names.map(
             name => ({ [name]: { ...stopwatch } })
         ));

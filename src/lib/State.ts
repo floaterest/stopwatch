@@ -10,5 +10,7 @@ export interface State{
     key: string;
     /// number of seconds to increment on each IRL second
     increment: number;
+    /// set of names
+    started: Set<string>;
     stopwatches: { [name: string]: Stopwatch };
 }
