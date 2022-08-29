@@ -36,6 +36,7 @@
 
 <style lang="sass">
     @use '../app' as *
+    @use 'sass:color'
     fieldset
         display: flex
         flex-direction: column
@@ -49,8 +50,8 @@
         width: 100%
         text-align: center
         font-family: $mono
-        &.started
-            background: darkgreen
+        &.start
+            background: color.change($lime, $lightness: 20%)
     section
         display: flex
         justify-content: center
