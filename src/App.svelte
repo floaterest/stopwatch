@@ -4,6 +4,7 @@
     import type { State } from './lib/State';
     import Started from './lib/Started.svelte';
     import Stopwatch from './lib/Stopwatch.svelte';
+    import { hhmmss, now } from './lib/helpers';
 
     export function save(state: State){
         /// save state to localStorage
@@ -15,8 +16,14 @@
         }));
     }
 
-    const on = (name: string) => () => $state.started = $state.started.add(name);
-    const off = (name: string) => () => {
+    const on = (name: string) => (display: number) => {
+        $state.stopwatches[name].timestamp = now();
+        $state.started = $state.started.add(name);
+    };
+    const off = (name: string) => (display: number) => {
+        $state.stopwatches[name].duration = display;
+        console.log(hhmmss(display));
+        console.log($state.stopwatches);
         $state.started.delete(name);
         $state.started = $state.started;
     };

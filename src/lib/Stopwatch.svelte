@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Stopwatch } from './State';
     import { state } from './stores';
-    import { hhmmss } from './helpers';
+    import { hhmmss, seconds } from './helpers';
 
     export let stopwatch: Stopwatch;
     export let now: number = stopwatch.timestamp;
@@ -9,7 +9,7 @@
     export let on: () => void;
     export let off: () => void;
     const start = $state.started.has(name);
-    $: display = hhmmss(stopwatch, $state.increment, now);
+    $: display = seconds(stopwatch, $state.increment, now);
 
     function edit(){
         console.log(name, 'edit');
@@ -24,9 +24,9 @@
 
 <fieldset>
     <legend>{name}</legend>
-    <code class:start>{display}</code>
+    <code class:start>{hhmmss(display)}</code>
     <section>
-        <button on:click={start?off:on} class="material-icons">
+        <button on:click={() => (start?off:on)(display)} class="material-icons">
             {#if start}pause{:else}play_arrow{/if}
         </button>
         <button on:click={edit} class="material-icons">edit</button>
