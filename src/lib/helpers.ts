@@ -7,11 +7,11 @@ export function now(): number{
 
 export function seconds(stopwatch: Stopwatch, increment: number, now: number){
     const { duration: du, timestamp: ts } = stopwatch;
-    return Math.max(du + (now - ts) * increment, 0);
+    return du + Math.max((now - ts) * increment, 0);
 }
 
 export function hhmmss(s: number){
-	return [s / 3600 | 0, (s / 60 | 0) % 60, s % 60].map(
-		n => n.toString().padStart(2, '0')
-	).join(':');
+    return [s / 3600 | 0, (s / 60 | 0) % 60, s % 60].map(
+        n => n.toString().padStart(2, '0')
+    ).join(':');
 }

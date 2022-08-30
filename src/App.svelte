@@ -21,8 +21,6 @@
     };
     const off = (name: string) => (display: number) => {
         $state.stopwatches[name].duration = display;
-        console.log(hhmmss(display));
-        console.log($state.stopwatches);
         $state.started.delete(name);
         $state.started = $state.started;
     };
