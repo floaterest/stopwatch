@@ -10,10 +10,10 @@ const init: State = {
 };
 
 export const now = readable<number>(_now(), set => {
-    console.log('set int');
+    console.debug('start interval');
     const int = setInterval(() => set(_now()), 1000);
-    return function(){
-        console.log('clear int');
+    return () => {
+        console.debug('clear interval');
         clearInterval(int);
     };
 });

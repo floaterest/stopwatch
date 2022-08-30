@@ -9,7 +9,6 @@
     export function save(state: State){
         /// save state to localStorage
         // todo save display time
-        console.log('save', state);
         const { increment, stopwatches } = state;
         localStorage.setItem(state.key, JSON.stringify({
             increment, stopwatches
