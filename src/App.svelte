@@ -28,8 +28,7 @@
     $: save($state);
     $: stopwatches = Object.entries($state.stopwatches).map(
         ([name, stopwatch]) => ({
-            name,
-            props: { name, stopwatch, on: on(name), off: off(name) },
+            name, stopwatch, on: on(name), off: off(name)
         })
     );
 
@@ -38,11 +37,11 @@
 <!-- <svelte:window on:beforeunload={unload} on:load={load}/> -->
 <Input/>
 <section>
-    {#each stopwatches as { name, props }}
+    {#each stopwatches as { name, ...props }}
         {#if $state.started.has(name)}
-            <Started {...props}/>
+            <Started {name} {...props}/>
         {:else}
-            <Stopwatch {...props}/>
+            <Stopwatch {name} {...props}/>
         {/if}
     {/each}
 </section>
