@@ -4,39 +4,29 @@ on:
   push:
   workflow_dispatch:
 
-env:
-  output-branch: pages
-  output-dir: dist
-  commit-message: (≧ω≦) update
-  remote: https://git:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git
-
 jobs:
-  github-pages:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
-
       - name: Setup node
         uses: actions/setup-node@v1
-        with:
-          node-version: 16
-
       - name: Compile Svelte
         run: |
-          npm install -f
-          npm run build
+          pnpm install 
+          pnpm run build
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v1
+        with: { path: dist }
 
-      - name: Push to ${{ env.output-branch }}
-        run: |
-          cd ${{ env.output-dir }}
-          git init
-          git config --global user.email "support+actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git config --global init.defaultBranch master
-          git remote add origin ${{ env.remote }}
-          git checkout -b ${{ env.output-branch }}
-          git add .
-          git commit -m "${{ env.commit-message }}"
-          git push -u origin ${{ env.output-branch }} -f
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
