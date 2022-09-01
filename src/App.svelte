@@ -4,11 +4,10 @@
     import type { State } from './lib/State';
     import Started from './lib/Started.svelte';
     import Stopwatch from './lib/Stopwatch.svelte';
-    import { hhmmss, now } from './lib/helpers';
+    import { now } from './lib/helpers';
 
     export function save(state: State){
         /// save state to localStorage
-        // todo save display time
         const { increment, stopwatches } = state;
         localStorage.setItem(state.key, JSON.stringify({
             increment, stopwatches
@@ -34,7 +33,6 @@
 
 </script>
 
-<!-- <svelte:window on:beforeunload={unload} on:load={load}/> -->
 <Input/>
 <section>
     {#each stopwatches as { name, ...props }}
