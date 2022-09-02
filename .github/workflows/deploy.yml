@@ -36,7 +36,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
         run: pnpm install
-      - name: Compile Svelte
+      - name: Build Svelte
         run: pnpm run build
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v1
@@ -45,6 +45,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
