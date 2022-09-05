@@ -22,9 +22,9 @@
     }
 </script>
 
-<fieldset>
+<fieldset class:start>
     <legend>{name}</legend>
-    <code class:start>{hhmmss(display)}</code>
+    <code>{hhmmss(display)}</code>
     <section>
         <button on:click={() => (start?off:on)(display)} class="material-icons">
             {#if start}pause{:else}play_arrow{/if}
@@ -46,12 +46,13 @@
         padding: 0
     legend
         margin-left: 1em
+    .start
+        border-color: $lime
+        color: $lime
     code
         width: 100%
         text-align: center
         font-family: $mono
-        &.start
-            background: color.change($lime, $lightness: 20%)
     section
         display: flex
         justify-content: center
