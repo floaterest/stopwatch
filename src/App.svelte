@@ -1,31 +1,23 @@
 <script lang="ts">
     import Input from './lib/Input.svelte';
-    import { state } from './lib/stores';
-    import type { State } from './lib/State';
+    import { started, storage } from './lib/stores';
+    import { key } from './lib/storage';
     import Started from './lib/Started.svelte';
     import Stopwatch from './lib/Stopwatch.svelte';
     import { now } from './lib/helpers';
 
-    export function save(state: State){
-        /// save state to localStorage
-        const { increment, stopwatches } = state;
-        localStorage.setItem(state.key, JSON.stringify({
-            increment, stopwatches
-        }));
-    }
-
     const on = (name: string) => (display: number) => {
-        $state.stopwatches[name].timestamp = now();
-        $state.started = $state.started.add(name);
+        $storage.stopwatches[name].timestamp = now();
+        $started = $started.add(name);
     };
     const off = (name: string) => (display: number) => {
-        $state.stopwatches[name].duration = display;
-        $state.started.delete(name);
-        $state.started = $state.started;
+        $storage.stopwatches[name].duration = display;
+        $started.delete(name);
+        $started = $started;
     };
 
-    $: save($state);
-    $: stopwatches = Object.entries($state.stopwatches).map(
+    $: localStorage.setItem(key, JSON.stringify($storage));
+    $: stopwatches = Object.entries($storage.stopwatches).map(
         ([name, stopwatch]) => ({
             name, stopwatch, on: on(name), off: off(name)
         })
@@ -36,7 +28,7 @@
 <Input/>
 <section>
     {#each stopwatches as { name, ...props }}
-        {#if $state.started.has(name)}
+        {#if $started.has(name)}
             <Started {name} {...props}/>
         {:else}
             <Stopwatch {name} {...props}/>

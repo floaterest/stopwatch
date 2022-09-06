@@ -1,13 +1,9 @@
 import { readable, writable } from 'svelte/store';
-import type { State } from './State';
+import type { Storage } from './storage';
+import { key } from './storage';
 import { now as _now } from './helpers';
 
-const init: State = {
-    key: 'stopwatch',
-    increment: 1,
-    stopwatches: {},
-    started: new Set()
-};
+const init: Storage = { increment: 1, stopwatches: {} };
 
 export const now = readable<number>(_now(), set => {
     console.debug('start interval');
@@ -19,6 +15,8 @@ export const now = readable<number>(_now(), set => {
 });
 
 // read state from localStorange
-export const state = writable<State>(((state: State) => ({
-    ...state, ...JSON.parse(localStorage.getItem(state.key) || '{}')
+export const storage = writable<Storage>(((storage: Storage) => ({
+    ...storage, ...JSON.parse(localStorage.getItem(key) || '{}')
 }))(init));
+
+export const started = writable<Set<string>>(new Set());
