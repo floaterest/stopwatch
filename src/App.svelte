@@ -40,5 +40,5 @@
     section
         display: grid
         gap: 1em
-        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr))
+        grid-template-columns: repeat(auto-fill, minmax(12em, 1fr))
 </style>

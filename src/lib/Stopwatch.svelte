@@ -59,6 +59,7 @@
         color: $pink
     fieldset
         display: flex
+        font-size: 2em
         flex-direction: column
         justify-content: center
         align-items: center
@@ -78,7 +79,7 @@
     button
         flex: 1
         background: $darkest
-        font-size: 1em
+        font-size: 2em
         font-family: unset
         color: unset
         border: none
