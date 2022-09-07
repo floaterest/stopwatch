@@ -6,12 +6,12 @@
     import Stopwatch from './lib/Stopwatch.svelte';
     import { now } from './lib/helpers';
 
-    const on = (name: string) => (display: number) => {
+    const on = (name: string) => (seconds: number) => {
         $storage.stopwatches[name].timestamp = now();
         $started = $started.add(name);
     };
-    const off = (name: string) => (display: number) => {
-        $storage.stopwatches[name].duration = display;
+    const off = (name: string) => (seconds: number) => {
+        $storage.stopwatches[name].duration = seconds;
         $started.delete(name);
         $started = $started;
     };
