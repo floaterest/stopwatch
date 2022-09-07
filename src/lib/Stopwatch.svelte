@@ -6,10 +6,14 @@
     export let stopwatch: Stopwatch;
     export let now: number = stopwatch.timestamp;
     export let name: string;
-    export let on: () => void;
-    export let off: () => void;
+    export let on: (display: number) => void;
+    export let off: (display: number) => void;
 
+    $: display = seconds(stopwatch, $storage.increment, now);
     let contenteditable = false;
+    const start = $started.has(name);
+    const _on = () => on(display);
+    const _off = () => off(display);
 
     function focusout({ target }: { target: HTMLElement }){
         console.log(name, 'focusout', target.innerText);
@@ -17,39 +21,33 @@
     }
 
     function edit(){
-        console.log(name, 'edit');
         contenteditable = true;
     }
 
     function remove(){
-        off();
+        off(display);
         const { [name]: _, ...stopwatches } = $storage.stopwatches;
         $storage.stopwatches = stopwatches as { [name: string]: Stopwatch };
     }
-
-    const start = $started.has(name);
-    $: display = seconds(stopwatch, $storage.increment, now);
 </script>
 
 <fieldset class:start>
     <legend>{name}</legend>
     <code {contenteditable} on:focusout={focusout}>{hhmmss(display)}</code>
     <section>
-        <button on:click={() => (start?off:on)(display)} class="material-icons">
-            {#if start}pause{:else}play_arrow{/if}
-        </button>
-        <button on:click={edit} class:disabled={start} class="material-icons">
-            edit
-        </button>
-        <button on:click={remove} class="material-icons">delete</button>
+        {#if start}
+            <button on:click={_off} class="material-icons">pause</button>
+        {:else}
+            <button on:click={edit} class="material-icons">edit</button>
+            <button on:click={_on} class="material-icons">play_arrow</button>
+            <button on:click={remove} class="material-icons">delete</button>
+        {/if}
     </section>
 </fieldset>
 
 <style lang="sass">
     @use '../app' as *
     @use 'sass:color'
-    button.disabled
-        filter: brightness(50%)
     .start
         border-color: $lime
         color: $lime
@@ -76,6 +74,5 @@
         background: $darkest
         color: unset
         border: none
-        &:not(.disabled)
-            cursor: pointer
+        cursor: pointer
 </style>
