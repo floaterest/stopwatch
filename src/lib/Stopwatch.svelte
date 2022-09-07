@@ -18,9 +18,9 @@
     let err = false;
     const start = $started.has(name);
 
-    function fout({ target: { innerText: t } }: { target: HTMLElement }){
-        if((err = !/\d\d:\d\d:\d\d/.test(t))) return;
-        off(t.split(':').map(Number).reduceRight(
+    function fout({ target: { innerText } }: { target: HTMLElement }){
+        if((err = !/\d\d:\d\d:\d\d/.test(innerText))) return;
+        off(innerText.split(':').map(Number).reduceRight(
             ({ acc, mul }, cur) => ({ acc: acc + cur * mul, mul: mul * 60 }),
             { acc: 0, mul: 1 }
         ).acc);
