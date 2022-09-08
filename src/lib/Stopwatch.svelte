@@ -10,7 +10,7 @@
 
     $: seconds = (() => {
         const { duration: du, timestamp: ts } = stopwatch;
-        return du + Math.max((now - ts) * $storage.increment, 0);
+        return Math.max(du + (now - ts) * $storage.increment, 0);
     })();
     $: contenteditable = $editing == name;
     $: display = [seconds / 3600, seconds / 60, seconds].map(
