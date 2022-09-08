@@ -1,16 +1,18 @@
 import { readable, writable } from 'svelte/store';
 import type { Storage } from './storage';
 import { key } from './storage';
-import { now as _now } from './helpers';
 
 const init: Storage = { increment: 1, stopwatches: {} };
 
-export const now = readable<number>(_now(), set => {
+/// return current timpstamp in seconds
+export const now = () => new Date().getTime() / 1000 | 0;
+
+export const int = readable<number>(now(), set => {
     console.debug('start interval');
-    const int = setInterval(() => set(_now()), 1000);
+    const interval = setInterval(() => set(now()), 1000);
     return () => {
         console.debug('clear interval');
-        clearInterval(int);
+        clearInterval(interval);
     };
 });
 

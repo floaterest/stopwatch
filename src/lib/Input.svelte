@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { storage } from './stores';
-    import { now } from './helpers';
+    import { now, storage } from './stores';
     import type { Stopwatch } from './storage';
 
     let value = '';
@@ -24,19 +23,34 @@
 
 </script>
 
-<input {...input} bind:value class:error on:keyup={submit}>
+<section>
+    <input {...input} bind:value id="stopwatch" class:error on:keyup={submit}>
+    <input id="increment" type="number" bind:value={$storage.increment}/>
+</section>
 <span>{error && `${error} already exists!`}</span>
 
 <style lang="sass">
     @use '../app' as *
+
+
+    section
+        display: flex
     input
+        &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
+            -webkit-appearance: none
+            margin: 0
+        &[type=number]
+            -moz-appearance: textfield
         font-size: unset
         box-sizing: border-box
-        border-radius: 3em
-        border: 1px solid $white
         background: unset
         color: unset
-        width: 100%
         padding: 1em
         height: 1em
+    input#increment
+        width: 5em
+    input#stopwatch
+        width: 90%
+        border-radius: 3em
+        border: 1px solid $white
 </style>
