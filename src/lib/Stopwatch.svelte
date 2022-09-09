@@ -31,12 +31,15 @@
         disabled = false;
     }
 
+    function reset(){
+        stopwatch.duration = stopwatch.reset;
+    }
+
     function remove(){
         off(seconds);
         const { [name]: _, ...stopwatches } = $storage.stopwatches;
         $storage.stopwatches = stopwatches as { [name: string]: Stopwatch };
     }
-
 </script>
 
 <fieldset class:start>
@@ -46,6 +49,7 @@
         {#if start}
             <button on:click={() => off(seconds)}>pause</button>
         {:else}
+            <button on:click={reset}>replay</button>
             <button on:click={() => on(seconds)} {disabled}>play_arrow</button>
             <button on:click={remove}>delete</button>
         {/if}
