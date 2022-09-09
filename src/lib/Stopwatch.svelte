@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Stopwatch } from './storage';
-    import { started, storage } from './stores';
+    import { parse, started, storage } from './stores';
 
     export let stopwatch: Stopwatch;
     export let now: number = stopwatch.timestamp;
@@ -21,14 +21,10 @@
     const contenteditable = !start;
 
     function fout({ target: { innerText } }: { target: HTMLElement }){
-        if(!(disabled = !/\d+/.test(innerText))){
-            return off(Number(innerText));
-        }else if(!(disabled = !/\d\d:\d\d:\d\d/.test(innerText))){
-            return off(innerText.split(':').map(Number).reduceRight(
-                ({ acc, mul }, cur) => ({ acc: acc + cur * mul, mul: mul * 60 }),
-                { acc: 0, mul: 1 }
-            ).acc);
-        }
+        disabled = parse.reduce((acc, { regex, func }) => acc && (() => {
+            if(!(acc = !regex.test(innerText))) off(func(innerText));
+            return acc;
+        })(), true);
     }
 
     function fin(){

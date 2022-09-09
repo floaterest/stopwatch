@@ -8,9 +8,9 @@ const init: Storage = { increment: 1, stopwatches: {} };
 export const now = () => new Date().getTime() / 1000 | 0;
 
 export const parse = [
-    { regex: /\d+/, func: Number },
+    { regex: /^\d+$/, func: Number },
     {
-        regex: /\d\d:\d\d:\d\d/,
+        regex: /^\d\d:\d\d:\d\d$/,
         func: innerText => innerText.split(':').map(Number).reduceRight(
             ({ acc, mul }, cur) => ({ acc: acc + cur * mul, mul: mul * 60 }),
             { acc: 0, mul: 1 }
