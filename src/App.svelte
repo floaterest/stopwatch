@@ -6,7 +6,6 @@
     import Stopwatch from './lib/Stopwatch.svelte';
 
     $: localStorage.setItem(key, JSON.stringify($storage));
-    $: console.log($started);
 </script>
 
 <Input/>

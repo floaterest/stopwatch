@@ -31,7 +31,8 @@
 
     function fout({ target: { innerText } }: { target: HTMLElement }){
         disabled = parse.reduce((acc, { regex, func }) => acc && (() => {
-            if(!(acc = !regex.test(innerText))) off(func(innerText));
+            if(!(acc = !regex.test(innerText)))
+                $storage.stopwatches[name].duration = func(innerText);
             return acc;
         })(), true);
     }
