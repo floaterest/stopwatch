@@ -1,36 +1,21 @@
 <script lang="ts">
     import Input from './lib/Input.svelte';
-    import { now, started, storage } from './lib/stores';
+    import { started, storage } from './lib/stores';
     import { key } from './lib/storage';
     import Started from './lib/Started.svelte';
     import Stopwatch from './lib/Stopwatch.svelte';
 
-    const on = (name: string) => (seconds: number) => {
-        $storage.stopwatches[name].timestamp = now();
-        $started = $started.add(name);
-    };
-    const off = (name: string) => (seconds: number) => {
-        $storage.stopwatches[name].duration = seconds;
-        $started.delete(name);
-        $started = $started;
-    };
-
     $: localStorage.setItem(key, JSON.stringify($storage));
-    $: stopwatches = Object.entries($storage.stopwatches).map(
-        ([name, stopwatch]) => ({
-            name, stopwatch, on: on(name), off: off(name)
-        })
-    );
-
+    $: console.log($started);
 </script>
 
 <Input/>
 <section>
-    {#each stopwatches as { name, ...props }}
+    {#each Object.entries($storage.stopwatches) as [name, stopwatch]}
         {#if $started.has(name)}
-            <Started {name} {...props}/>
+            <Started {name} {stopwatch}/>
         {:else}
-            <Stopwatch {name} {...props}/>
+            <Stopwatch {name} {stopwatch}/>
         {/if}
     {/each}
 </section>
