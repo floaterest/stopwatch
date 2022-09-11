@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Stopwatch } from './storage';
-    import { now as _now, parse, started, storage } from './stores';
+    import { now as _now, started, storage, tonumber } from './stores';
 
     export let stopwatch: Stopwatch;
     export let now: number = stopwatch.timestamp;
@@ -30,11 +30,9 @@
     }
 
     function fout({ target: { innerText } }: { target: HTMLElement }){
-        disabled = parse.reduce((acc, { regex, func }) => acc && (() => {
-            if(!(acc = !regex.test(innerText)))
-                $storage.stopwatches[name].duration = func(innerText);
-            return acc;
-        })(), true);
+        const n = tonumber(innerText);
+        if(!(disabled = isNaN(n)))
+            $storage.stopwatches[name].duration = n;
     }
 
     function fin(){
