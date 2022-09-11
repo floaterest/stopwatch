@@ -1,19 +1,28 @@
 <script lang="ts">
-    import { now, storage } from './stores';
+    import { now, storage, tonumber } from './stores';
     import type { Stopwatch } from './storage';
 
     let value = '';
-    $: names = value.trim().split(' ');
-    $: error = names.find(name => $storage.stopwatches[name]) || '';
-
     const input = { type: 'text', placeholder: 'Type titles here...' };
+    const init: Stopwatch = { duration: 0, timestamp: now(), reset: 0 };
+    $: names = value.trim().split(' ');
+    $: stopwatches = value.trim().split(/\s+/).filter(Boolean).map(
+        s => [s, ...s.split('@', 2)]
+    ).map(
+        ([s, name, rest]) => ({ s, name, reset: tonumber(rest) })
+    ).map(
+        ({ s, name, reset }) => isFinite(reset) ?
+            { name, stopwatch: { reset, duration: reset } } :
+            { name: s, stopwatch: {} }
+    ) as { name: string, stopwatch: Partial<Stopwatch> }[];
+    $: error = stopwatches.find(({ name }) => $storage.stopwatches[name])?.name || '';
+
 
     function submit({ keyCode }){
-        if(keyCode !== 13) return;
+        if(keyCode !== 13 || error) return;
         /// push new stopwatches
-        const stopwatch: Stopwatch = { duration: 0, timestamp: now(), reset: 0 };
-        $storage.stopwatches = Object.assign($storage.stopwatches, ...names.map(
-            name => ({ [name]: { ...stopwatch } })
+        $storage.stopwatches = Object.assign($storage.stopwatches, ...stopwatches.map(
+            ({ name, stopwatch }) => ({ [name]: { ...init, ...stopwatch } })
         ));
         value = '';
     }
