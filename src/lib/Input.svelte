@@ -46,6 +46,9 @@
             margin: 0
         &[type=number]
             -moz-appearance: textfield
+        &.err
+            border-color: $pink
+        border: 1px solid $white
         font-size: unset
         box-sizing: border-box
         background: unset
@@ -57,5 +60,4 @@
     input#stopwatch
         width: 90%
         border-radius: 3em
-        border: 1px solid $white
 </style>
