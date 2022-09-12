@@ -15,11 +15,11 @@
             { name, stopwatch: { reset, duration: reset } } :
             { name: s, stopwatch: {} }
     ) as { name: string, stopwatch: Partial<Stopwatch> }[];
-    $: error = stopwatches.find(({ name }) => $storage.stopwatches[name])?.name || '';
+    $: err = stopwatches.find(({ name }) => $storage.stopwatches[name])?.name || '';
 
 
     function submit({ keyCode }){
-        if(keyCode !== 13 || error) return;
+        if(keyCode !== 13 || err) return;
         /// push new stopwatches
         $storage.stopwatches = Object.assign($storage.stopwatches, ...stopwatches.map(
             ({ name, stopwatch }) => ({ [name]: { ...init, ...stopwatch } })
@@ -30,10 +30,10 @@
 </script>
 
 <section>
-    <input {...input} bind:value id="stopwatch" class:error on:keyup={submit}>
+    <input {...input} bind:value id="stopwatch" class:err on:keyup={submit}>
     <input id="increment" type="number" bind:value={$storage.increment}/>
 </section>
-<span>{error && `${error} already exists!`}</span>
+<span>{err && `${err} already exists!`}</span>
 
 <style lang="sass">
     @use '../app' as *
