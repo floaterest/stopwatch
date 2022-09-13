@@ -63,7 +63,7 @@
         {:else}
             <button on:click={reset}>replay</button>
             <button on:click={on} {disabled}>play_arrow</button>
-            <button on:click={remove}>delete</button>
+            <button on:click={remove}>delete_forever</button>
         {/if}
     </section>
 </fieldset>
