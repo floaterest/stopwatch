@@ -57,7 +57,7 @@
     <legend>{name}</legend>
     <code {contenteditable} on:focusout={fout} on:focusin={fin}
           class:disabled class:focused>{display}</code>
-    <section class="material-icons">
+    <section class="material-icons-round">
         {#if start}
             <button on:click={off}>pause</button>
         {:else}
