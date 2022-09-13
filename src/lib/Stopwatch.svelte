@@ -15,6 +15,7 @@
     ).join(':');
 
     let disabled = false;
+    let focused = false;
     const start = $started.has(name);
     const contenteditable = !start;
 
@@ -30,6 +31,7 @@
     }
 
     function fout({ target: { innerText } }: { target: HTMLElement }){
+        focused = false;
         const n = tonumber(innerText);
         if(!(disabled = isNaN(n)))
             $storage.stopwatches[name].duration = n;
@@ -37,6 +39,7 @@
 
     function fin(){
         disabled = false;
+        focused = true;
     }
 
     function reset(){
@@ -52,7 +55,8 @@
 
 <fieldset class:start>
     <legend>{name}</legend>
-    <code {contenteditable} on:focusout={fout} on:focusin={fin} class:disabled>{display}</code>
+    <code {contenteditable} on:focusout={fout} on:focusin={fin}
+          class:disabled class:focused>{display}</code>
     <section class="material-icons">
         {#if start}
             <button on:click={off}>pause</button>
@@ -72,6 +76,8 @@
         color: $lime
     .disabled
         color: $pink
+    .focused
+        text-decoration: underline
     fieldset
         display: flex
         font-size: 2em
