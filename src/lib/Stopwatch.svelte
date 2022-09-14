@@ -69,7 +69,7 @@
 </fieldset>
 
 <style lang="sass">
-    @use '../app' as *
+    @use '../vars' as *
     @use 'sass:color'
     .start
         border-color: $lime
@@ -88,10 +88,6 @@
         padding: 0
     legend
         margin-left: 1em
-    code
-        width: 100%
-        text-align: center
-        font-family: $mono
     section
         display: flex
         justify-content: center
