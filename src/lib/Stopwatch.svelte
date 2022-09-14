@@ -69,7 +69,7 @@
 </fieldset>
 
 <style lang="sass">
-    @use '../vars' as *
+    @use '../colors' as *
     @use 'sass:color'
     .start
         border-color: $lime
@@ -80,7 +80,6 @@
         text-decoration: underline
     fieldset
         display: flex
-        font-size: 2em
         flex-direction: column
         justify-content: center
         align-items: center
@@ -96,11 +95,6 @@
     button
         flex: 1
         background: $darkest
-        font-size: 2em
-        font-family: unset
-        color: unset
-        border: none
-        cursor: pointer
         &[disabled]
             cursor: unset
             filter: brightness(50%)

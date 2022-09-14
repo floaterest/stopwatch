@@ -2,8 +2,7 @@
     import { now, storage, tonumber } from './stores';
     import type { Stopwatch } from './storage';
 
-    let value = '';
-    const input = { type: 'text', placeholder: 'Type titles here...' };
+    let value = '', focus = false;
     const init: Stopwatch = { duration: 0, timestamp: now(), reset: 0 };
     $: names = value.trim().split(' ');
     $: stopwatches = value.trim().split(/\s+/).filter(Boolean).map(
@@ -27,23 +26,56 @@
         value = '';
     }
 
+    const input = { type: 'text', placeholder: 'Type titles here...' };
 </script>
 
 <section>
-    <input {...input} bind:value id="stopwatch" class:err on:keyup={submit}>
+    <div id="stopwatch" class:err class:focus>
+        <span class="material-icons-round">timer</span>
+        <input {...input} bind:value on:keyup={submit}
+               on:focusin={() => focus = true} on:focusout={() => focus = false}>
+    </div>
     <input id="increment" type="number" bind:value={$storage.increment}/>
 </section>
-<span>{err && `${err} already exists!`}</span>
+<div id="err">{err && `${err} already exists!`}</div>
 
 <style lang="sass">
-    @use '../vars' as *
+    @use '../colors' as *
+    $radius: 1em
+    @mixin transition($prop)
+        transition-property: $prop
+        transition-duration: 200ms
+    @mixin color($color)
+        border-color: $color
+        .material-icons-round
+            color: $color
+    section, #err
+        font-size: 0.5em
+    #err
+        color: $pink
     section
         display: flex
-    input.err
-        border-color: $pink
+
     input#increment
         width: 5em
-    input#stopwatch
+    #stopwatch
+        @include transition(border)
+        border-radius: $radius
         width: 90%
-        border-radius: 3em
+        border: 1px solid $white
+        display: flex
+        align-items: center
+        span.material-icons-round
+            @include transition(color)
+            display: flex
+            align-items: center
+            justify-content: center
+            padding: 0.2em
+        input
+            width: 100%
+            padding-right: $radius
+        &.focus
+            @include color($teal)
+        &.err
+            @include color($pink)
 </style>
