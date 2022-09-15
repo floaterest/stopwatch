@@ -29,12 +29,10 @@
     const input = { type: 'text', placeholder: 'Type titles here...' };
 </script>
 
-<section>
-    <div id="stopwatch" class:err class:focus>
-        <span class="material-icons-round">timer</span>
-        <input {...input} bind:value on:keyup={submit}
-               on:focusin={() => focus = true} on:focusout={() => focus = false}>
-    </div>
+<section class:err class:focus>
+    <span class="material-icons-round">timer</span>
+    <input id="stopwatch" {...input} bind:value on:keyup={submit}
+           on:focusin={() => focus = true} on:focusout={() => focus = false}>
     <input id="increment" type="number" bind:value={$storage.increment}/>
 </section>
 <div id="err">{err && `${err} already exists!`}</div>
@@ -53,15 +51,13 @@
         font-size: 0.5em
     #err
         color: $pink
-    section
-        display: flex
 
     input#increment
         width: 5em
-    #stopwatch
+    section
         @include transition(border)
         border-radius: $radius
-        width: 90%
+        width: 100%
         border: 1px solid $white
         display: flex
         align-items: center
@@ -70,10 +66,13 @@
             display: flex
             align-items: center
             justify-content: center
-            padding: 0.2em
-        input
-            width: 100%
-            padding-right: $radius
+            margin: 0.2em
+        input#stopwatch
+            width: 90%
+        input#increment
+            width: 5%
+            padding-left: 0.5em
+            border-left: 1px solid $white
         &.focus
             @include color($teal)
         &.err
