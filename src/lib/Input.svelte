@@ -29,10 +29,9 @@
     const input = { type: 'text', placeholder: 'Type titles here...' };
 </script>
 
-<section class:err class:focus>
+<section class:err class:focus on:focusin={() => focus = true} on:focusout={() => focus = false}>
     <span class="material-icons-round">timer</span>
-    <input id="stopwatch" {...input} bind:value on:keyup={submit}
-           on:focusin={() => focus = true} on:focusout={() => focus = false}>
+    <input id="stopwatch" {...input} bind:value on:keyup={submit}>
     <input id="increment" type="number" bind:value={$storage.increment}/>
 </section>
 {#if err}
