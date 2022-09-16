@@ -53,10 +53,10 @@
     }
 </script>
 
-<fieldset class:start>
+<fieldset class:start class:focused>
     <legend>{name}</legend>
     <code {contenteditable} on:focusout={fout} on:focusin={fin}
-          class:disabled class:focused>{display}</code>
+          class:disabled>{display}</code>
     <section class="material-icons-round">
         {#if start}
             <button on:click={off}>pause</button>
@@ -70,6 +70,7 @@
 
 <style lang="sass">
     @use '../colors' as *
+    @use '../mixins' as *
     @use 'sass:color'
     .start
         border-color: $lime
@@ -77,7 +78,9 @@
     .disabled
         color: $pink
     .focused
-        text-decoration: underline
+        legend
+            color: $teal
+        border-color: $teal
     fieldset
         display: flex
         flex-direction: column
@@ -85,8 +88,10 @@
         align-items: center
         user-select: none
         padding: 0
+        @include transition(border)
     legend
         margin-left: 1em
+        @include transition(color)
     section
         display: flex
         justify-content: center

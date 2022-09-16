@@ -41,14 +41,14 @@
 
 <style lang="sass">
     @use '../colors' as *
+    @use '../mixins' as *
+
     $radius: 1em
-    @mixin transition($prop)
-        transition-property: $prop
-        transition-duration: 200ms
     @mixin color($color)
         border-color: $color
         .material-icons-round
             color: $color
+
     section, #err
         font-size: 0.5em
     #err
