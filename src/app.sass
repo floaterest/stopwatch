@@ -1,5 +1,6 @@
 @use 'colors' as *
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons+Round'
+@import 'https://fonts.googleapis.com/css2?family=Roboto'
 @import 'https://floaterest.github.io/font/iosevka.css'
 
 body
@@ -17,6 +18,8 @@ input
         margin: 0
     &[type=number]
         -moz-appearance: textfield
+    &::placeholder
+        font-family: Roboto, sans-serif
     font-size: inherit
     border: unset
     font-family: unset
