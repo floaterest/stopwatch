@@ -35,7 +35,9 @@
            on:focusin={() => focus = true} on:focusout={() => focus = false}>
     <input id="increment" type="number" bind:value={$storage.increment}/>
 </section>
-<div id="err">{err && `${err} already exists!`}</div>
+{#if err}
+    <div id="err"><code>{err}</code> already exists!</div>
+{/if}
 
 <style lang="sass">
     @use '../colors' as *
@@ -51,7 +53,7 @@
         font-size: 0.5em
     #err
         color: $pink
-
+        font-family: Roboto, sans-serif
     input#increment
         width: 5em
     section
