@@ -15,7 +15,7 @@
     ).join(':');
 
     let disabled = false;
-    let focused = false;
+    let focus = false;
     const start = $started.has(name);
     const contenteditable = !start;
 
@@ -31,7 +31,7 @@
     }
 
     function fout({ target: { innerText } }: { target: HTMLElement }){
-        focused = false;
+        focus = false;
         const n = tonumber(innerText);
         if(!(disabled = isNaN(n)))
             $storage.stopwatches[name].duration = n;
@@ -39,7 +39,7 @@
 
     function fin(){
         disabled = false;
-        focused = true;
+        focus = true;
     }
 
     function reset(){
@@ -53,7 +53,7 @@
     }
 </script>
 
-<fieldset class:start class:focused>
+<fieldset class:start class:focus>
     <legend>{name}</legend>
     <code {contenteditable} on:focusout={fout} on:focusin={fin}
           class:disabled>{display}</code>
@@ -77,7 +77,7 @@
         color: $lime
     .disabled
         color: $pink
-    .focused
+    .focus
         legend
             color: $teal
         border-color: $teal
