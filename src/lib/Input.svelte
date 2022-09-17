@@ -52,8 +52,6 @@
     #err
         color: $pink
         font-family: Roboto, sans-serif
-    input#increment
-        width: 5em
     section
         @include transition(border)
         border-radius: $radius
@@ -61,20 +59,20 @@
         border: 1px solid $white
         display: flex
         align-items: center
-        span.material-icons-round
-            @include transition(color)
-            display: flex
-            align-items: center
-            justify-content: center
-            margin: 0.2em
-        input#stopwatch
-            width: 90%
-        input#increment
-            width: 5%
-            padding-left: 0.5em
-            border-left: 1px solid $white
         &.focus
             @include color($teal)
         &.err
             @include color($pink)
+    span.material-icons-round
+        @include transition(color)
+        display: flex
+        align-items: center
+        justify-content: center
+        margin: 0.2em
+    input#stopwatch
+        width: 90%
+    input#increment
+        width: 5%
+        padding-left: 0.5em
+        border-left: 1px solid $white
 </style>
