@@ -4,7 +4,6 @@
 
     let value = '', focus = false;
     const init: Stopwatch = { duration: 0, timestamp: now(), reset: 0 };
-    $: names = value.trim().split(' ');
     $: stopwatches = value.trim().split(/\s+/).filter(Boolean).map(
         s => [s, ...s.split('@', 2)]
     ).map(
