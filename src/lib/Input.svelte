@@ -70,9 +70,12 @@
         justify-content: center
         margin: 0.2em
     input#stopwatch
-        width: 90%
+        flex: 1
+        width: 100%
     input#increment
-        width: 5%
+        width: 2.5em
+        padding-right: 1em
         padding-left: 0.5em
         border-left: 1px solid $white
+        text-align: right
 </style>
