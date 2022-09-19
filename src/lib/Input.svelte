@@ -30,7 +30,7 @@
 <section class:err class:focus on:focusin={() => focus = true} on:focusout={() => focus = false}>
     <form on:submit|preventDefault={submit}>
         <label for="stopwatch" class="material-icons-round">timer</label>
-        <input id="stopwatch" {...input} bind:value>
+        <input id="stopwatch" {...input} bind:value autocomplete="off">
     </form>
     <input id="increment" type="number" bind:value={$storage.increment}/>
 </section>
