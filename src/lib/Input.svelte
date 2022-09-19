@@ -16,8 +16,7 @@
     $: err = stopwatches.find(({ name }) => $storage.stopwatches[name])?.name || '';
 
 
-    function submit({ keyCode }){
-        if(keyCode !== 13 || err) return;
+    function submit(){
         /// push new stopwatches
         $storage.stopwatches = Object.assign($storage.stopwatches, ...stopwatches.map(
             ({ name, stopwatch }) => ({ [name]: { ...init, ...stopwatch } })
@@ -29,8 +28,10 @@
 </script>
 
 <section class:err class:focus on:focusin={() => focus = true} on:focusout={() => focus = false}>
-    <span class="material-icons-round">timer</span>
-    <input id="stopwatch" {...input} bind:value on:keyup={submit}>
+    <form on:submit|preventDefault={submit}>
+        <label for="stopwatch" class="material-icons-round">timer</label>
+        <input id="stopwatch" {...input} bind:value>
+    </form>
     <input id="increment" type="number" bind:value={$storage.increment}/>
 </section>
 {#if err}
@@ -63,7 +64,10 @@
             @include color($teal)
         &.err
             @include color($pink)
-    span.material-icons-round
+    form
+        display: flex
+        flex: 1
+    .material-icons-round
         @include transition(color)
         display: flex
         align-items: center
