@@ -24,13 +24,17 @@
         value = '';
     }
 
-    const input = { type: 'text', placeholder: 'Type titles here...' };
+    const input = {
+        type: 'text',
+        placeholder: 'Type titles here...',
+        autocomplete: false
+    };
 </script>
 
 <section class:err class:focus on:focusin={() => focus = true} on:focusout={() => focus = false}>
     <form on:submit|preventDefault={submit}>
         <label for="stopwatch" class="material-icons-round">timer</label>
-        <input id="stopwatch" {...input} bind:value autocomplete="off">
+        <input id="stopwatch" {...input} bind:value>
     </form>
     <input id="increment" type="number" bind:value={$storage.increment}/>
 </section>
