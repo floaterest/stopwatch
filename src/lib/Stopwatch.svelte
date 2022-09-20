@@ -8,7 +8,7 @@
 
     let focus = false;
     const start = $started.has(name);
-    const { duration: du, timestamp: ts } = stopwatch;
+    let { duration: du, timestamp: ts } = stopwatch;
 
     $: seconds = Math.max(du + (now - ts) * $increment, 0);
     $: innerHTML = [seconds / 3600, seconds / 60, seconds].map(
@@ -29,7 +29,8 @@
     }
 
     function reset(){
-        stopwatch.duration = stopwatch.reset;
+        // update du to update seconds to update innerHTML
+        $stopwatches[name].duration = du = stopwatch.reset;
     }
 
     function remove(){
