@@ -33,7 +33,7 @@
     }
 
     function remove(){
-        const { [name]: _, ...sws } = stopwatches;
+        const { [name]: _, ...sws } = $stopwatches;
         $stopwatches = sws as { [name: string]: Stopwatch };
     }
 </script>
