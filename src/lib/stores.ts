@@ -1,5 +1,5 @@
 import { readable, writable } from 'svelte/store';
-import type { Storage } from './storage';
+import type { Stopwatch, Storage } from './storage';
 import { key } from './storage';
 
 const parsers = [
@@ -12,6 +12,10 @@ const parsers = [
         ).acc
     }
 ] as { regex: RegExp, func: (s: string) => number }[];
+// read state from localStorange
+const local = ((storage: Storage) => ({
+    ...storage, ...JSON.parse(localStorage.getItem(key) || '{}')
+}))({ increment: 1, stopwatches: {} }) as Storage;
 
 export const tonumber = (s: string) => parsers.reduce(
     (n, { regex, func }) => {
@@ -39,9 +43,6 @@ export const int = readable<number>(now(), set => {
     };
 });
 
-// read state from localStorange
-export const storage = writable<Storage>(((storage: Storage) => ({
-    ...storage, ...JSON.parse(localStorage.getItem(key) || '{}')
-}))({ increment: 1, stopwatches: {} }));
-
+export const stopwatches = writable<{ [name: string]: Stopwatch }>(local.stopwatches);
+export const increment = writable<number>(local.increment);
 export const started = writable<Set<string>>(new Set());
