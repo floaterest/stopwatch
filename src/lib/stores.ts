@@ -1,4 +1,4 @@
-import { readable, writable } from 'svelte/store';
+import { derived, readable, writable } from 'svelte/store';
 import type { Stopwatch, Storage } from './storage';
 import { key } from './storage';
 
@@ -46,3 +46,7 @@ export const int = readable<number>(now(), set => {
 export const stopwatches = writable<{ [name: string]: Stopwatch }>(local.stopwatches);
 export const increment = writable<number>(local.increment);
 export const started = writable<Set<string>>(new Set());
+export const storage = derived(
+    [stopwatches, increment],
+    ([stopwatches, increment]) => ({ stopwatches, increment }) as Storage
+);

@@ -1,15 +1,11 @@
 <script lang="ts">
     import Input from './lib/Input.svelte';
-    import { increment, started, stopwatches } from './lib/stores';
-    import type { Storage } from './lib/storage';
+    import { started, stopwatches, storage } from './lib/stores';
     import { key } from './lib/storage';
     import Started from './lib/Started.svelte';
     import Stopwatch from './lib/Stopwatch.svelte';
 
-    $: localStorage.setItem(key, JSON.stringify({
-        stopwatches: $stopwatches,
-        increment: $increment
-    } as Storage));
+    $: localStorage.setItem(key, JSON.stringify($storage));
 </script>
 
 <Input/>
