@@ -1,0 +1,11 @@
+{
+    "name": "Stopwatch",
+    "display": "fullscreen",
+    "icons": [
+        {
+            "src": "favicon.svg",
+            "sizes": "192x192",
+            "type": "image/svg"
+        }
+    ]
+}
