@@ -1,6 +1,6 @@
 {
     "name": "Stopwatch",
-    "display": "fullscreen",
+    "display": "standalone",
     "icons": [
         {
             "src": "favicon.svg",
