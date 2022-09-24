@@ -5,9 +5,9 @@
     "theme_color": "#39c5bb",
     "icons": [
         {
-            "src": "icon.png",
+            "src": "favicon.svg",
             "sizes": "240x240",
-            "type": "image/png"
+            "type": "image/svg+xml"
         }
     ]
 }
