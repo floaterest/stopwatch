@@ -15,13 +15,13 @@ export default defineConfig({
                     src: '192x192.png',
                     sizes: '192x192',
                     type: 'image/png'
-                },{
+                }, {
                     src: '512x512.png',
                     sizes: '512x512',
                     type: 'image/png'
                 }],
                 background_color: '#000',
-                theme_color: '#39c5bb',
+                theme_color: '#000',
             }
         }),
     ]
