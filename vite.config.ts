@@ -11,6 +11,8 @@ export default defineConfig({
             filename: 'worker.js',
             manifestFilename: 'manifest.json',
             manifest: {
+                name: 'Stopwatch',
+                short_name: 'Stopwatch',
                 icons: [{
                     src: '192x192.png',
                     sizes: '192x192',
