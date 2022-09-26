@@ -4,6 +4,11 @@
 
 ## Features
 
+- can start multiple stopwatches concurrently
+- supports PWA
+- stopwatches and increment are stored in `localStorage`
+- shows error in real time when input is invalid 
+
 ### Display
 
 - displayed time is updated synchonously, using a single `setInterval()`
@@ -24,8 +29,3 @@
   - an increment of $n$ means for each second passed, $n$ seconds will be added to all stopwatches that are on
   - e.g. increment of -1 can be used as timer (i.e. countdown)
   - if increment is negative and stopwatch is at 00:00:00, the stopwatch will stay at 00:00:00 for the next second
-
-### Storage
-
-- stopwatches are stored in `localStorage`
-  - all stopwatches displayed time will be save to `localStorage` on each user actions (turn on/off an stopwatch, add new stopwatches, etc)
