@@ -1,7 +1,7 @@
 name: Deploy Svelte to GitHub Pages
 
 on:
-  push:
+  push: { branches-ignore: [ master ] }
   workflow_dispatch:
 
 concurrency:
