@@ -1,8 +1,8 @@
 import App from './App.svelte';
-import './global.sass';
+import './app.sass';
 
 const app = new App({
-	target: document.querySelector('body'),
+	target: document.body,
 	props: { key: 'stopwatch' }
 });
 
