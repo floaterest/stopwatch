@@ -1,33 +1,24 @@
-import { derived, readable, writable } from 'svelte/store';
-import type { Stopwatch } from './Stopwatch';
+import { readable, writable } from 'svelte/store';
+import type { State } from './State';
+import { now as _now } from './helpers';
 
-const time = () => new Date().getTime() / 1000 | 0;
+const init: State = {
+    key: 'stopwatch',
+    increment: 1,
+    stopwatches: {},
+    started: new Set()
+};
 
-// current time in seconds
-export const now = readable<number>(time(), set => {
-	const interval = setInterval(() => set(time()), 1000);
-	return () => clearInterval(interval);
+export const now = readable<number>(_now(), set => {
+    console.debug('start interval');
+    const int = setInterval(() => set(_now()), 1000);
+    return () => {
+        console.debug('clear interval');
+        clearInterval(int);
+    };
 });
 
-const timestamp = time();
-const started = false;
-const duration = 0;
-// stopwatch title -> stopwatch
-export const stopwatches = writable<{ [id: string]: Stopwatch }>({
-	a: { started, timestamp, duration },
-	b: { started, timestamp, duration },
-	c: { started, timestamp, duration },
-	d: { started, timestamp, duration },
-});
-
-// stopwatch title -> current number of seconds
-export const times = derived<any[], { [id: string]: number }>([now, stopwatches],
-	([$now, $stopwatches]) => Object.entries($stopwatches).reduce(
-		(acc, [title, { started, timestamp, duration }]) => {
-			// if started { add delta } else { use duration }
-			acc[title] = started ? duration + $now - timestamp : duration;
-			return acc;
-		},
-		{}
-	)
-);
+// read state from localStorange
+export const state = writable<State>(((state: State) => ({
+    ...state, ...JSON.parse(localStorage.getItem(state.key) || '{}')
+}))(init));

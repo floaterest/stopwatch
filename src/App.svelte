@@ -1,37 +1,52 @@
 <script lang="ts">
-	import List from './lib/List.svelte';
-	import Input from './lib/Input.svelte';
-	import { now, stopwatches, times } from './lib/stores';
-	import type { Stopwatch } from './lib/Stopwatch.ts';
+    import Input from './lib/Input.svelte';
+    import { state } from './lib/stores';
+    import type { State } from './lib/State';
+    import Started from './lib/Started.svelte';
+    import Stopwatch from './lib/Stopwatch.svelte';
+    import { now } from './lib/helpers';
 
-	/// key for localStorage
-	export let key: string;
+    export function save(state: State){
+        /// save state to localStorage
+        const { increment, stopwatches } = state;
+        localStorage.setItem(state.key, JSON.stringify({
+            increment, stopwatches
+        }));
+    }
 
-	// load times from localStorage
-	function load(){
-		let storage;
-		if(!(storage = localStorage.getItem(key))) return;
-		const timestamp = $now;
-		const started = false;
-		$stopwatches = Object.entries(JSON.parse(storage) as { [id: string]: number }).reduce(
-			(acc, [title, duration]) => {
-				acc[title] = {
-					started,
-					timestamp,
-					duration,
-				} as Stopwatch;
-				return acc;
-			},
-			{}
-		);
-	}
+    const on = (name: string) => (display: number) => {
+        $state.stopwatches[name].timestamp = now();
+        $state.started = $state.started.add(name);
+    };
+    const off = (name: string) => (display: number) => {
+        $state.stopwatches[name].duration = display;
+        $state.started.delete(name);
+        $state.started = $state.started;
+    };
 
-	// save times to localStorage
-	function unload(){
-		localStorage.setItem(key, JSON.stringify($times));
-	}
+    $: save($state);
+    $: stopwatches = Object.entries($state.stopwatches).map(
+        ([name, stopwatch]) => ({
+            name, stopwatch, on: on(name), off: off(name)
+        })
+    );
+
 </script>
 
-<svelte:window on:beforeunload={unload} on:load={load}/>
 <Input/>
-<List/>
+<section>
+    {#each stopwatches as { name, ...props }}
+        {#if $state.started.has(name)}
+            <Started {name} {...props}/>
+        {:else}
+            <Stopwatch {name} {...props}/>
+        {/if}
+    {/each}
+</section>
+
+<style lang="sass">
+    section
+        display: grid
+        gap: 1em
+        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr))
+</style>

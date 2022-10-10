@@ -1,49 +1,42 @@
 <script lang="ts">
-	import type { Stopwatch } from './Stopwatch.ts';
-	import { now, times } from './stores';
-	import { hhmmss } from './Stopwatch.ts';
+    import type { Stopwatch } from './State';
+    import { state } from './stores';
+    import { hhmmss, seconds } from './helpers';
 
-	export let title: string;
-	export let stopwatch: Stopwatch;
-	export let active: string;
-	export let remove: () => void;
+    export let stopwatch: Stopwatch;
+    export let now: number = stopwatch.timestamp;
+    export let name: string;
+    export let on: () => void;
+    export let off: () => void;
+    const start = $state.started.has(name);
+    $: display = seconds(stopwatch, $state.increment, now);
 
+    function edit(){
+        console.log(name, 'edit');
+    }
 
-	function on(){
-		stopwatch.started = true;
-		stopwatch.timestamp = $now;
-		active = title;
-	}
-
-	function off(){
-		stopwatch.started = false;
-		stopwatch.duration = $times[title];
-	}
-
-	function reset(){
-		stopwatch.duration = 0;
-		stopwatch.timestamp = $now;
-	}
-
-	$: started = stopwatch.started;
-	$: innerHTML = hhmmss($times[title]);
+    function remove(){
+        off();
+        const { [name]: _, ...stopwatches } = $state.stopwatches;
+        $state.stopwatches = stopwatches as { [name: string]: Stopwatch };
+    }
 </script>
 
 <fieldset>
-    <legend>{title}</legend>
-    <!--     <code class:started contenteditable="true" bind:innerHTML></code> -->
-    <code class:started>{innerHTML}</code>
+    <legend>{name}</legend>
+    <code class:start>{hhmmss(display)}</code>
     <section>
-        <button on:click={started?off:on} class="material-icons">
-            {#if started}&#xe034;{:else}&#xe037;{/if}
+        <button on:click={() => (start?off:on)(display)} class="material-icons">
+            {#if start}pause{:else}play_arrow{/if}
         </button>
-        <button on:click={reset} class="material-icons">&#xe5d5;</button>
-        <button on:click={remove} class="material-icons">&#xe872;</button>
+        <button on:click={edit} class="material-icons">edit</button>
+        <button on:click={remove} class="material-icons">delete</button>
     </section>
 </fieldset>
 
 <style lang="sass">
     @use '../app' as *
+    @use 'sass:color'
     fieldset
         display: flex
         flex-direction: column
@@ -57,8 +50,8 @@
         width: 100%
         text-align: center
         font-family: $mono
-        &.started
-            background: darkgreen
+        &.start
+            background: color.change($lime, $lightness: 20%)
     section
         display: flex
         justify-content: center
@@ -66,16 +59,8 @@
         align-items: center
     button
         flex: 1
-        width: 50%
         background: $darkest
         color: unset
-        text-transform: uppercase
         border: none
-        display: flex
-        justify-content: center
-        align-items: center
-        font-size: 1em
-        &:not(:disabled)
-            cursor: pointer
-
+        cursor: pointer
 </style>
