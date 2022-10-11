@@ -4,39 +4,58 @@ on:
   push:
   workflow_dispatch:
 
-env:
-  output-branch: pages
-  output-dir: dist
-  commit-message: (≧ω≦) update
-  remote: https://git:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  github-pages:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
-
       - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: '*'
 
-      - name: Compile Svelte
-        run: |
-          npm install -f
-          npm run build
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        id: pnpm-install
+        with:
+          version: latest
+          run_install: false
 
-      - name: Push to ${{ env.output-branch }}
+      - name: Get pnpm store directory
+        id: pnpm-cache
         run: |
-          cd ${{ env.output-dir }}
-          git init
-          git config --global user.email "support+actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git config --global init.defaultBranch master
-          git remote add origin ${{ env.remote }}
-          git checkout -b ${{ env.output-branch }}
-          git add .
-          git commit -m "${{ env.commit-message }}"
-          git push -u origin ${{ env.output-branch }} -f
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build Svelte
+        run: pnpm run build
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v1
+        with: { path: dist }
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
