@@ -20,3 +20,4 @@ export const storage = writable<Storage>(((storage: Storage) => ({
 }))(init));
 
 export const started = writable<Set<string>>(new Set());
+export const editing = writable<string>('');
