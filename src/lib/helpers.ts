@@ -1,4 +1,4 @@
-import type { Stopwatch } from './State';
+import type { Stopwatch } from './storage';
 
 export function now(): number{
     /// current timpstamp in seconds

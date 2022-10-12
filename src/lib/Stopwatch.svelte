@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { Stopwatch } from './State';
-    import { state } from './stores';
+    import type { Stopwatch } from './storage';
+    import { started, storage } from './stores';
     import { hhmmss, seconds } from './helpers';
 
     export let stopwatch: Stopwatch;
@@ -8,8 +8,8 @@
     export let name: string;
     export let on: () => void;
     export let off: () => void;
-    const start = $state.started.has(name);
-    $: display = seconds(stopwatch, $state.increment, now);
+    const start = $started.has(name);
+    $: display = seconds(stopwatch, $storage.increment, now);
 
     function edit(){
         console.log(name, 'edit');
@@ -17,14 +17,14 @@
 
     function remove(){
         off();
-        const { [name]: _, ...stopwatches } = $state.stopwatches;
-        $state.stopwatches = stopwatches as { [name: string]: Stopwatch };
+        const { [name]: _, ...stopwatches } = $storage.stopwatches;
+        $storage.stopwatches = stopwatches as { [name: string]: Stopwatch };
     }
 </script>
 
-<fieldset>
+<fieldset class:start>
     <legend>{name}</legend>
-    <code class:start>{hhmmss(display)}</code>
+    <code>{hhmmss(display)}</code>
     <section>
         <button on:click={() => (start?off:on)(display)} class="material-icons">
             {#if start}pause{:else}play_arrow{/if}
@@ -46,12 +46,13 @@
         padding: 0
     legend
         margin-left: 1em
+    .start
+        border-color: $lime
+        color: $lime
     code
         width: 100%
         text-align: center
         font-family: $mono
-        &.start
-            background: color.change($lime, $lightness: 20%)
     section
         display: flex
         justify-content: center

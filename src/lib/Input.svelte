@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { state } from './stores';
+    import { storage } from './stores';
     import { now } from './helpers';
-    import type { Stopwatch } from './State';
+    import type { Stopwatch } from './storage';
 
     let value = '';
     $: names = value.trim().split(' ');
-    $: error = names.find(name => $state.stopwatches[name]) || '';
+    $: error = names.find(name => $storage.stopwatches[name]) || '';
 
     const input = {
         type: 'text',
@@ -16,7 +16,7 @@
         if(keyCode !== 13) return;
         /// push new stopwatches
         const stopwatch: Stopwatch = { timestamp: now(), duration: 0 };
-        $state.stopwatches = Object.assign($state.stopwatches, ...names.map(
+        $storage.stopwatches = Object.assign($storage.stopwatches, ...names.map(
             name => ({ [name]: { ...stopwatch } })
         ));
         value = '';
