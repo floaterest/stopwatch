@@ -1,7 +1,6 @@
 <script lang="ts">
     import type { Stopwatch } from './storage';
     import { editing, started, storage } from './stores';
-    import { toseconds } from './helpers';
 
     export let stopwatch: Stopwatch;
     export let now: number = stopwatch.timestamp;
@@ -9,7 +8,10 @@
     export let on: (seconds: number) => void;
     export let off: (seconds: number) => void;
 
-    $: seconds = toseconds(stopwatch, $storage.increment, now);
+    $: seconds = (() => {
+        const { duration: du, timestamp: ts } = stopwatch;
+        return Math.max(du + (now - ts) * $storage.increment, 0);
+    })();
     $: contenteditable = $editing == name;
     $: display = [seconds / 3600, seconds / 60, seconds].map(
         n => (n % 60 | 0).toString().padStart(2, '0')

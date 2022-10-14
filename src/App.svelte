@@ -1,10 +1,9 @@
 <script lang="ts">
     import Input from './lib/Input.svelte';
-    import { started, storage } from './lib/stores';
+    import { now, started, storage } from './lib/stores';
     import { key } from './lib/storage';
     import Started from './lib/Started.svelte';
     import Stopwatch from './lib/Stopwatch.svelte';
-    import { now } from './lib/helpers';
 
     const on = (name: string) => (seconds: number) => {
         $storage.stopwatches[name].timestamp = now();
