@@ -1,12 +1,10 @@
 <script lang="ts">
     import type { Stopwatch } from './storage';
-    import { parse, started, storage } from './stores';
+    import { now as _now, started, storage, tonumber } from './stores';
 
     export let stopwatch: Stopwatch;
     export let now: number = stopwatch.timestamp;
     export let name: string;
-    export let on: (seconds: number) => void;
-    export let off: (seconds: number) => void;
 
     $: seconds = (() => {
         const { duration: du, timestamp: ts } = stopwatch;
@@ -20,23 +18,36 @@
     const start = $started.has(name);
     const contenteditable = !start;
 
+    function on(){
+        $storage.stopwatches[name].timestamp = _now();
+        $started = $started.add(name);
+    }
+
+    function off(){
+        $storage.stopwatches[name].duration = seconds;
+        $started.delete(name);
+        $started = $started;
+    }
+
     function fout({ target: { innerText } }: { target: HTMLElement }){
-        disabled = parse.reduce((acc, { regex, func }) => acc && (() => {
-            if(!(acc = !regex.test(innerText))) off(func(innerText));
-            return acc;
-        })(), true);
+        const n = tonumber(innerText);
+        if(!(disabled = isNaN(n)))
+            $storage.stopwatches[name].duration = n;
     }
 
     function fin(){
         disabled = false;
     }
 
+    function reset(){
+        disabled = false;
+        stopwatch.duration = stopwatch.reset;
+    }
+
     function remove(){
-        off(seconds);
         const { [name]: _, ...stopwatches } = $storage.stopwatches;
         $storage.stopwatches = stopwatches as { [name: string]: Stopwatch };
     }
-
 </script>
 
 <fieldset class:start>
@@ -44,9 +55,10 @@
     <code {contenteditable} on:focusout={fout} on:focusin={fin} class:disabled>{display}</code>
     <section class="material-icons">
         {#if start}
-            <button on:click={() => off(seconds)}>pause</button>
+            <button on:click={off}>pause</button>
         {:else}
-            <button on:click={() => on(seconds)} {disabled}>play_arrow</button>
+            <button on:click={reset}>replay</button>
+            <button on:click={on} {disabled}>play_arrow</button>
             <button on:click={remove}>delete</button>
         {/if}
     </section>
