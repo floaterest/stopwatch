@@ -15,6 +15,7 @@
     ).join(':');
 
     let disabled = false;
+    let focused = false;
     const start = $started.has(name);
     const contenteditable = !start;
 
@@ -30,6 +31,7 @@
     }
 
     function fout({ target: { innerText } }: { target: HTMLElement }){
+        focused = false;
         const n = tonumber(innerText);
         if(!(disabled = isNaN(n)))
             $storage.stopwatches[name].duration = n;
@@ -37,6 +39,7 @@
 
     function fin(){
         disabled = false;
+        focused = true;
     }
 
     function reset(){
@@ -52,26 +55,29 @@
 
 <fieldset class:start>
     <legend>{name}</legend>
-    <code {contenteditable} on:focusout={fout} on:focusin={fin} class:disabled>{display}</code>
-    <section class="material-icons">
+    <code {contenteditable} on:focusout={fout} on:focusin={fin}
+          class:disabled class:focused>{display}</code>
+    <section class="material-icons-round">
         {#if start}
             <button on:click={off}>pause</button>
         {:else}
             <button on:click={reset}>replay</button>
             <button on:click={on} {disabled}>play_arrow</button>
-            <button on:click={remove}>delete</button>
+            <button on:click={remove}>delete_forever</button>
         {/if}
     </section>
 </fieldset>
 
 <style lang="sass">
-    @use '../app' as *
+    @use '../vars' as *
     @use 'sass:color'
     .start
         border-color: $lime
         color: $lime
     .disabled
         color: $pink
+    .focused
+        text-decoration: underline
     fieldset
         display: flex
         font-size: 2em
@@ -82,10 +88,6 @@
         padding: 0
     legend
         margin-left: 1em
-    code
-        width: 100%
-        text-align: center
-        font-family: $mono
     section
         display: flex
         justify-content: center

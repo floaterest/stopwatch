@@ -36,25 +36,11 @@
 <span>{err && `${err} already exists!`}</span>
 
 <style lang="sass">
-    @use '../app' as *
-
+    @use '../vars' as *
     section
         display: flex
-    input
-        &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
-            -webkit-appearance: none
-            margin: 0
-        &[type=number]
-            -moz-appearance: textfield
-        &.err
-            border-color: $pink
-        border: 1px solid $white
-        font-size: unset
-        box-sizing: border-box
-        background: unset
-        color: unset
-        padding: 1em
-        height: 1em
+    input.err
+        border-color: $pink
     input#increment
         width: 5em
     input#stopwatch

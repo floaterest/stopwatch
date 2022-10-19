@@ -1,36 +1,26 @@
-@import 'https://fonts.googleapis.com/css2?family=Roboto&display=swap'
-@import 'https://fonts.googleapis.com/icon?family=Material+Icons'
-
-$size: 24px
-
-$black: #000000
-$darkest: #121212
-$darker: #313131
-$dark: #575757
-$gray: #7f7f7f
-$light: #a7a7a7
-$lighter: #cdcdcd
-$lightest: #ececec
-$white: #ffffff
-
-$red: #c53943
-$green: #39c575
-$orange: #ff9966
-$blue: #3989c5
-$indigo: #3943c5
-$teal: #39c5bb
-
-$pink: #ff6680
-$lime: #66ff99
-$yellow: #ffe666
-$sky: #66ccff
-$purple: #a68cd9
-$cyan: #66ffe6
-
-$mono: 'Iosekva Custom', monospace
+@use './vars' as *
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons+Round'
+@import 'https://floaterest.github.io/font/iosevka.css'
 
 body
     background: $black
     color: $white
-    font-family: Roboto, sans-serif
+    font-family: 'Iosevka Web', monospace
     font-size: $size
+// firefox hack
+*:focus
+    outline: 0
+input
+    &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
+        -webkit-appearance: none
+        margin: 0
+    &[type=number]
+        -moz-appearance: textfield
+    border: 1px solid $white
+    font-size: unset
+    font-family: unset
+    box-sizing: border-box
+    background: unset
+    color: unset
+    padding: 1em
+    height: 1em
