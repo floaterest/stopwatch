@@ -1,0 +1,29 @@
+repository:
+  allow_squash_merge: false
+  allow_rebase_merge: false
+  delete_branch_on_merge: true
+
+labels:
+  - name: fix
+    color: '#ff6680'
+    description: Bug was put on trial and executed
+
+  - name: feat
+    color: '#39c5bb'
+    description: New feature has joined chat
+
+  - name: refactor
+    color: '#ffe666'
+    description: Cedo has beomce mroe raedebla tahn eevr bofree
+
+  - name: doc
+    color: '#66ccff'
+    description: For programmers with short memory (i.e. me)
+
+  - name: chore
+    color: '#d7d7d7'
+    description: Happy compiler, happy life
+
+  - name: perf
+    color: '#ff9966'
+    description: I am speed
