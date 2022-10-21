@@ -2,8 +2,7 @@
     import { now, storage, tonumber } from './stores';
     import type { Stopwatch } from './storage';
 
-    let value = '';
-    const input = { type: 'text', placeholder: 'Type titles here...' };
+    let value = '', focus = false;
     const init: Stopwatch = { duration: 0, timestamp: now(), reset: 0 };
     $: names = value.trim().split(' ');
     $: stopwatches = value.trim().split(/\s+/).filter(Boolean).map(
@@ -27,23 +26,56 @@
         value = '';
     }
 
+    const input = { type: 'text', placeholder: 'Type titles here...' };
 </script>
 
-<section>
-    <input {...input} bind:value id="stopwatch" class:err on:keyup={submit}>
+<section class:err class:focus on:focusin={() => focus = true} on:focusout={() => focus = false}>
+    <span class="material-icons-round">timer</span>
+    <input id="stopwatch" {...input} bind:value on:keyup={submit}>
     <input id="increment" type="number" bind:value={$storage.increment}/>
 </section>
-<span>{err && `${err} already exists!`}</span>
+{#if err}
+    <div id="err"><code>{err}</code> already exists!</div>
+{/if}
 
 <style lang="sass">
-    @use '../vars' as *
-    section
-        display: flex
-    input.err
-        border-color: $pink
+    @use '../colors' as *
+    @use '../mixins' as *
+
+    $radius: 1em
+    @mixin color($color)
+        border-color: $color
+        .material-icons-round
+            color: $color
+
+    section, #err
+        font-size: 0.5em
+    #err
+        color: $pink
+        font-family: Roboto, sans-serif
     input#increment
         width: 5em
-    input#stopwatch
-        width: 90%
-        border-radius: 3em
+    section
+        @include transition(border)
+        border-radius: $radius
+        width: 100%
+        border: 1px solid $white
+        display: flex
+        align-items: center
+        span.material-icons-round
+            @include transition(color)
+            display: flex
+            align-items: center
+            justify-content: center
+            margin: 0.2em
+        input#stopwatch
+            width: 90%
+        input#increment
+            width: 5%
+            padding-left: 0.5em
+            border-left: 1px solid $white
+        &.focus
+            @include color($teal)
+        &.err
+            @include color($pink)
 </style>

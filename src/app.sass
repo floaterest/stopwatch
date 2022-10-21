@@ -1,13 +1,15 @@
-@use './vars' as *
+@use 'colors' as *
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons+Round'
+@import 'https://fonts.googleapis.com/css2?family=Roboto'
 @import 'https://floaterest.github.io/font/iosevka.css'
 
 body
     background: $black
     color: $white
     font-family: 'Iosevka Web', monospace
-    font-size: $size
-// firefox hack
+    font-size: 48px
+
+// override firefox styles
 *:focus
     outline: 0
 input
@@ -16,11 +18,22 @@ input
         margin: 0
     &[type=number]
         -moz-appearance: textfield
-    border: 1px solid $white
-    font-size: unset
+    &::placeholder
+        font-family: Roboto, sans-serif
+    font-size: inherit
+    border: unset
     font-family: unset
     box-sizing: border-box
     background: unset
     color: unset
-    padding: 1em
-    height: 1em
+
+button
+    font-family: unset
+    font-size: unset
+    color: unset
+    border: none
+    cursor: pointer
+
+.material-icons-round
+    font-size: 1.2em
+

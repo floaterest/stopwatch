@@ -22,6 +22,6 @@
 <style lang="sass">
     section
         display: grid
-        gap: 1em
-        grid-template-columns: repeat(auto-fill, minmax(12em, 1fr))
+        gap: 0.5em
+        grid-template-columns: repeat(auto-fill, minmax(6em, 1fr))
 </style>

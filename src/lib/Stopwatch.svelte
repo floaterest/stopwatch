@@ -15,7 +15,7 @@
     ).join(':');
 
     let disabled = false;
-    let focused = false;
+    let focus = false;
     const start = $started.has(name);
     const contenteditable = !start;
 
@@ -31,7 +31,7 @@
     }
 
     function fout({ target: { innerText } }: { target: HTMLElement }){
-        focused = false;
+        focus = false;
         const n = tonumber(innerText);
         if(!(disabled = isNaN(n)))
             $storage.stopwatches[name].duration = n;
@@ -39,7 +39,7 @@
 
     function fin(){
         disabled = false;
-        focused = true;
+        focus = true;
     }
 
     function reset(){
@@ -53,10 +53,10 @@
     }
 </script>
 
-<fieldset class:start>
+<fieldset class:start class:focus>
     <legend>{name}</legend>
     <code {contenteditable} on:focusout={fout} on:focusin={fin}
-          class:disabled class:focused>{display}</code>
+          class:disabled>{display}</code>
     <section class="material-icons-round">
         {#if start}
             <button on:click={off}>pause</button>
@@ -69,25 +69,29 @@
 </fieldset>
 
 <style lang="sass">
-    @use '../vars' as *
+    @use '../colors' as *
+    @use '../mixins' as *
     @use 'sass:color'
     .start
         border-color: $lime
         color: $lime
     .disabled
         color: $pink
-    .focused
-        text-decoration: underline
+    .focus
+        legend
+            color: $teal
+        border-color: $teal
     fieldset
         display: flex
-        font-size: 2em
         flex-direction: column
         justify-content: center
         align-items: center
         user-select: none
         padding: 0
+        @include transition(border)
     legend
         margin-left: 1em
+        @include transition(color)
     section
         display: flex
         justify-content: center
@@ -96,11 +100,6 @@
     button
         flex: 1
         background: $darkest
-        font-size: 2em
-        font-family: unset
-        color: unset
-        border: none
-        cursor: pointer
         &[disabled]
             cursor: unset
             filter: brightness(50%)
