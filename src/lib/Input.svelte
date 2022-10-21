@@ -4,7 +4,6 @@
 
     let value = '', focus = false;
     const init: Stopwatch = { duration: 0, timestamp: now(), reset: 0 };
-    $: names = value.trim().split(' ');
     $: stopwatches = value.trim().split(/\s+/).filter(Boolean).map(
         s => [s, ...s.split('@', 2)]
     ).map(
@@ -17,8 +16,7 @@
     $: err = stopwatches.find(({ name }) => $storage.stopwatches[name])?.name || '';
 
 
-    function submit({ keyCode }){
-        if(keyCode !== 13 || err) return;
+    function submit(){
         /// push new stopwatches
         $storage.stopwatches = Object.assign($storage.stopwatches, ...stopwatches.map(
             ({ name, stopwatch }) => ({ [name]: { ...init, ...stopwatch } })
@@ -26,12 +24,18 @@
         value = '';
     }
 
-    const input = { type: 'text', placeholder: 'Type titles here...' };
+    const input = {
+        type: 'text',
+        placeholder: 'Type titles here...',
+        autocomplete: false
+    };
 </script>
 
 <section class:err class:focus on:focusin={() => focus = true} on:focusout={() => focus = false}>
-    <span class="material-icons-round">timer</span>
-    <input id="stopwatch" {...input} bind:value on:keyup={submit}>
+    <form on:submit|preventDefault={submit}>
+        <label for="stopwatch" class="material-icons-round">timer</label>
+        <input id="stopwatch" {...input} bind:value>
+    </form>
     <input id="increment" type="number" bind:value={$storage.increment}/>
 </section>
 {#if err}
@@ -53,8 +57,6 @@
     #err
         color: $pink
         font-family: Roboto, sans-serif
-    input#increment
-        width: 5em
     section
         @include transition(border)
         border-radius: $radius
@@ -62,20 +64,26 @@
         border: 1px solid $white
         display: flex
         align-items: center
-        span.material-icons-round
-            @include transition(color)
-            display: flex
-            align-items: center
-            justify-content: center
-            margin: 0.2em
-        input#stopwatch
-            width: 90%
-        input#increment
-            width: 5%
-            padding-left: 0.5em
-            border-left: 1px solid $white
         &.focus
             @include color($teal)
         &.err
             @include color($pink)
+    form
+        display: flex
+        flex: 1
+    .material-icons-round
+        @include transition(color)
+        display: flex
+        align-items: center
+        justify-content: center
+        margin: 0.2em
+    input#stopwatch
+        flex: 1
+        width: 100%
+    input#increment
+        width: 2.5em
+        padding-right: 1em
+        padding-left: 0.5em
+        border-left: 1px solid $white
+        text-align: right
 </style>

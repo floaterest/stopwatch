@@ -86,10 +86,10 @@
         flex-direction: column
         justify-content: center
         align-items: center
-        user-select: none
         padding: 0
         @include transition(border)
     legend
+        user-select: none
         margin-left: 1em
         @include transition(color)
     section
