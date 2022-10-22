@@ -2,8 +2,12 @@ repository:
   allow_squash_merge: false
   allow_rebase_merge: false
   delete_branch_on_merge: true
-
+ 
 labels:
+  - name: good first issue
+    color: '#a68cd9'
+    description: Good for newcomers
+
   - name: fix
     color: '#ff6680'
     description: Bug was put on trial and executed
