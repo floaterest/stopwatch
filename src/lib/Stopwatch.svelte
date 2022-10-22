@@ -1,62 +1,52 @@
 <script lang="ts">
     import type { Stopwatch } from './storage';
-    import { now as _now, started, storage, tonumber } from './stores';
+    import { increment, now as _now, started, stopwatches, tonumber } from './stores';
 
     export let stopwatch: Stopwatch;
     export let now: number = stopwatch.timestamp;
     export let name: string;
 
-    $: seconds = (() => {
-        const { duration: du, timestamp: ts } = stopwatch;
-        return Math.max(du + (now - ts) * $storage.increment, 0);
-    })();
-    $: display = [seconds / 3600, seconds / 60, seconds].map(
-        n => (n % 60 | 0).toString().padStart(2, '0')
-    ).join(':');
-
-    let disabled = false;
     let focus = false;
     const start = $started.has(name);
-    const contenteditable = !start;
+    let { duration: du, timestamp: ts } = stopwatch;
+
+    $: seconds = Math.max(du + (now - ts) * $increment, 0);
+    $: innerHTML = [seconds / 3600, seconds / 60, seconds].map(
+        n => (n % 60 | 0).toString().padStart(2, '0')
+    ).join(':');
+    $: disabled = start || isNaN(tonumber(innerHTML));
 
     function on(){
-        $storage.stopwatches[name].timestamp = _now();
+        $stopwatches[name].duration = tonumber(innerHTML);
+        $stopwatches[name].timestamp = _now();
         $started = $started.add(name);
     }
 
     function off(){
-        $storage.stopwatches[name].duration = seconds;
+        $stopwatches[name].duration = seconds;
         $started.delete(name);
         $started = $started;
     }
 
-    function fout({ target: { innerText } }: { target: HTMLElement }){
-        focus = false;
-        const n = tonumber(innerText);
-        if(!(disabled = isNaN(n)))
-            $storage.stopwatches[name].duration = n;
-    }
-
-    function fin(){
-        disabled = false;
-        focus = true;
-    }
-
     function reset(){
-        disabled = false;
-        stopwatch.duration = stopwatch.reset;
+        // update du to update seconds to update innerHTML
+        $stopwatches[name].duration = du = stopwatch.reset;
     }
 
     function remove(){
-        const { [name]: _, ...stopwatches } = $storage.stopwatches;
-        $storage.stopwatches = stopwatches as { [name: string]: Stopwatch };
+        const { [name]: _, ...sws } = $stopwatches;
+        $stopwatches = sws as { [name: string]: Stopwatch };
     }
 </script>
 
 <fieldset class:start class:focus>
     <legend>{name}</legend>
-    <code {contenteditable} on:focusout={fout} on:focusin={fin}
-          class:disabled>{display}</code>
+    {#if start}
+        <code>{innerHTML}</code>
+    {:else}
+        <code on:focusout={() => focus = false} on:focusin={() => focus = true}
+              contenteditable="true" class:disabled bind:innerHTML></code>
+    {/if}
     <section class="material-icons-round">
         {#if start}
             <button on:click={off}>pause</button>
@@ -75,6 +65,7 @@
     .start
         border-color: $lime
         color: $lime
+        user-select: none
     .disabled
         color: $pink
     .focus

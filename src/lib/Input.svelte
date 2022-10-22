@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { now, storage, tonumber } from './stores';
+    import { increment, now, stopwatches, tonumber } from './stores';
     import type { Stopwatch } from './storage';
 
     let value = '', focus = false;
     const init: Stopwatch = { duration: 0, timestamp: now(), reset: 0 };
-    $: stopwatches = value.trim().split(/\s+/).filter(Boolean).map(
+    $: res = value.trim().split(/\s+/).filter(Boolean).map(
         s => [s, ...s.split('@', 2)]
     ).map(
         ([s, name, rest]) => ({ s, name, reset: tonumber(rest) })
@@ -13,12 +13,12 @@
             { name, stopwatch: { reset, duration: reset } } :
             { name: s, stopwatch: {} }
     ) as { name: string, stopwatch: Partial<Stopwatch> }[];
-    $: err = stopwatches.find(({ name }) => $storage.stopwatches[name])?.name || '';
+    $: err = res.find(({ name }) => $stopwatches[name])?.name || '';
 
 
     function submit(){
         /// push new stopwatches
-        $storage.stopwatches = Object.assign($storage.stopwatches, ...stopwatches.map(
+        $stopwatches = Object.assign($stopwatches, ...res.map(
             ({ name, stopwatch }) => ({ [name]: { ...init, ...stopwatch } })
         ));
         value = '';
@@ -27,7 +27,7 @@
     const input = {
         type: 'text',
         placeholder: 'Type titles here...',
-        autocomplete: false
+        autocomplete: 'off'
     };
 </script>
 
@@ -36,7 +36,7 @@
         <label for="stopwatch" class="material-icons-round">timer</label>
         <input id="stopwatch" {...input} bind:value>
     </form>
-    <input id="increment" type="number" bind:value={$storage.increment}/>
+    <input id="increment" type="number" bind:value={$increment}/>
 </section>
 {#if err}
     <div id="err"><code>{err}</code> already exists!</div>
