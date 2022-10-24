@@ -26,7 +26,7 @@
 
     const input = {
         type: 'text',
-        placeholder: 'Type titles here...',
+        placeholder: 'Enter titles here...',
         autocomplete: 'off'
     };
 </script>

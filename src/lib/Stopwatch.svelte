@@ -83,6 +83,9 @@
         user-select: none
         margin-left: 1em
         @include transition(color)
+    code
+        width: 100%
+        text-align: center
     section
         display: flex
         justify-content: center
